@@ -1,0 +1,27 @@
+{
+  "name": "cerveceria-artesanal",
+  "version": "1.0.0",
+  "description": "Cervecería artesanal",
+  "main": "app.py",
+  "scripts": {
+    "dev": "flask --app app run --debug"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vis97c/cerveceria-poo.git"
+  },
+  "keywords": [
+    "Cervecería",
+    "Artesanal"
+  ],
+  "author": "Víctor Saa",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/vis97c/cerveceria-poo/issues"
+  },
+  "homepage": "https://github.com/vis97c/cerveceria-poo#readme",
+  "packageManager": "yarn@1.22.22",
+  "dependencies": {
+    "prettier": "^3.4.1"
+  }
+}
