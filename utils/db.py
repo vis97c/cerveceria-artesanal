@@ -7,7 +7,7 @@ def conectar():
       # Conectar 
       conexion = sqlite3.connect('cerveceria.db')
 
-      # Finalizar conexion de la base de datos dada
+      # Finalizar conexión de la base de datos dada
       def cerrar():
          conexion.close()
 
@@ -16,7 +16,7 @@ def conectar():
          # 1. Recorrer base de datos
          cursorObj = conexion.cursor()
 
-         # 2. SQL a ejecutar, 3. Ejecutar la instruccion SQL
+         # 2. SQL a ejecutar, 3. Ejecutar la instrucción SQL
          # Si la tabla existe "IF NOT EXISTS" previene errores
          if valores:
             cursorObj.execute(instruccion, valores)
@@ -29,8 +29,8 @@ def conectar():
 
          return cursorObj
 
-      # Establezco la conexion y creo la db fisica
-      return { correr, conexion, cerrar }
+      # Establezco la conexión y creo la db fisica
+      return ( correr, conexion, cerrar )
     
    except Error:
       print(Error)

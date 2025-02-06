@@ -17,18 +17,8 @@
 			rel="stylesheet"
 			href="https://unpkg.com/@open-xamu-co/ui-styles@^3.0.0-next.29/dist/index.min.css"
 		/>
+		<link rel="stylesheet" href="/css/main.css" />
 		<title>Productos - Cervecería artesanal</title>
-		<style>
-			::selection {
-				background: #0f47af;
-				color: #fff;
-			}
-			#appex {
-				width: 100%;
-				height: 100%;
-				overflow: hidden;
-			}
-		</style>
 	</head>
 	<body>
 		<main id="appex" class="--txtColor-dark7">
@@ -52,29 +42,125 @@
 									<li class="">
 										<button
 											class="bttn"
+											type="button"
 											data-tooltip="Crear un producto"
 											data-tooltip-text
+											data-modal-toggle="create"
 										>
 											Crear
 										</button>
+										<dialog id="create">
+											<div
+												class="modal flx --flxColumn --flx-start-center --width-auto --maxWidth-100 --tm-light-secondary --txtColor"
+												role="document"
+											>
+												<div
+													class="flx --flxRow --flx-between-center --width-100 modal-content"
+												>
+													<div class="txt --gap-none">
+														<h5>Crear</h5>
+														<p class="--txtSize-xs">
+															Crear un nuevo producto
+														</p>
+													</div>
+													<button
+														type="button"
+														aria-label="Cerrar modal"
+														data-modal-toggle="create"
+													>
+														<i
+															class="icon --size-20 fa-solid fa-xmark"
+														></i>
+													</button>
+												</div>
+												<div
+													class="scroll --vertical --width-100 modal-content"
+												>
+													Contenido del modal
+												</div>
+												<div
+													class="flx --flxRow --flx-between-center --width-100 modal-content"
+												>
+													<button class="bttn">Crear producto</button>
+													<button
+														class="bttnToggle --round:sm-inv"
+														data-modal-toggle="create"
+													>
+														<i
+															class="icon --hidden-full:sm fa-solid fa-xmark"
+														></i>
+														<i
+															class="icon --hidden-full:sm fa-solid fa-xmark"
+														></i>
+														<span class="--hidden-full:sm-inv">
+															Cerrar
+														</span>
+													</button>
+												</div>
+											</div>
+										</dialog>
 									</li>
 									<li class="">
 										<button
 											class="bttn"
 											data-tooltip="Actualizar el nombre de un producto"
 											data-tooltip-text
+											data-modal-toggle="update"
 										>
 											Actualizar nombre
 										</button>
-									</li>
-									<li class="">
-										<button
-											class="bttn"
-											data-tooltip="Consultar un producto"
-											data-tooltip-text
-										>
-											Consultar
-										</button>
+										<dialog id="update">
+											<div
+												class="modal flx --flxColumn --flx-start-center --width-auto --maxWidth-100 --tm-light-secondary --txtColor"
+												role="document"
+											>
+												<div
+													class="flx --flxRow --flx-between-center --width-100 modal-content"
+												>
+													<div class="txt --gap-none">
+														<h5>Actualizar</h5>
+														<p class="--txtSize-xs">
+															Actualizar el nombre de un producto
+														</p>
+													</div>
+													<button
+														type="button"
+														aria-label="Cerrar modal"
+														data-modal-toggle="update"
+													>
+														<i
+															class="icon --size-20 fa-solid fa-xmark"
+														></i>
+													</button>
+												</div>
+												<div
+													class="scroll --vertical --width-100 modal-content"
+												>
+													Contenido del modal
+												</div>
+												<div
+													class="flx --flxRow --flx-between-center --width-100 modal-content"
+												>
+													<button class="bttn">
+														Actualizar producto
+													</button>
+													<button
+														class="bttnToggle --round:sm-inv"
+														data-modal-toggle="update"
+													>
+														<i
+															class="icon --hidden-full:sm fa-solid fa-xmark"
+														></i>
+														<i
+															class="icon --hidden-full:sm fa-solid fa-xmark"
+														></i>
+														<span class="--hidden-full:sm-inv">
+															Cerrar
+														</span>
+													</button>
+												</div>
+											</div>
+										</dialog>
 									</li>
 								</ul>
 							</div>
@@ -94,10 +180,5 @@
 			</div>
 		</main>
 	</body>
-	<script type="text/javascript" defer>
-		// Call the function on page load
-		document.addEventListener("DOMContentLoaded", async () => {
-			console.log("Pagina cargada");
-		});
-	</script>
+	<script src="/js/main.js" defer></script>
 </html>

@@ -17,18 +17,8 @@
 			rel="stylesheet"
 			href="https://unpkg.com/@open-xamu-co/ui-styles@^3.0.0-next.29/dist/index.min.css"
 		/>
+		<link rel="stylesheet" href="/css/main.css" />
 		<title>Ventas - Cervecería artesanal</title>
-		<style>
-			::selection {
-				background: #0f47af;
-				color: #fff;
-			}
-			#appex {
-				width: 100%;
-				height: 100%;
-				overflow: hidden;
-			}
-		</style>
 	</head>
 	<body>
 		<main id="appex" class="--txtColor-dark7">
@@ -52,11 +42,120 @@
 									<li class="">
 										<button
 											class="bttn"
-											data-tooltip="Vender un producto"
+											type="button"
+											data-tooltip="Vender productos"
 											data-tooltip-text
+											data-modal-toggle="sell"
 										>
 											Vender
 										</button>
+										<dialog id="sell">
+											<div
+												class="modal flx --flxColumn --flx-start-center --width-auto --maxWidth-100 --tm-light-secondary --txtColor"
+												role="document"
+											>
+												<div
+													class="flx --flxRow --flx-between-center --width-100 modal-content"
+												>
+													<div class="txt --gap-none">
+														<h5>Vender</h5>
+														<p class="--txtSize-xs">Vender productos</p>
+													</div>
+													<button
+														type="button"
+														aria-label="Cerrar modal"
+														data-modal-toggle="sell"
+													>
+														<i
+															class="icon --size-20 fa-solid fa-xmark"
+														></i>
+													</button>
+												</div>
+												<div
+													class="scroll --vertical --width-100 modal-content"
+												>
+													Contenido del modal
+												</div>
+												<div
+													class="flx --flxRow --flx-between-center --width-100 modal-content"
+												>
+													<button class="bttn">Vender producto</button>
+													<button
+														class="bttnToggle --round:sm-inv"
+														data-modal-toggle="sell"
+													>
+														<i
+															class="icon --hidden-full:sm fa-solid fa-xmark"
+														></i>
+														<i
+															class="icon --hidden-full:sm fa-solid fa-xmark"
+														></i>
+														<span class="--hidden-full:sm-inv">
+															Cerrar
+														</span>
+													</button>
+												</div>
+											</div>
+										</dialog>
+									</li>
+									<li class="">
+										<button
+											class="bttn"
+											type="button"
+											data-tooltip="Facturar venta"
+											data-tooltip-text
+											data-modal-toggle="bill"
+										>
+											Facturar
+										</button>
+										<dialog id="bill">
+											<div
+												class="modal flx --flxColumn --flx-start-center --width-auto --maxWidth-100 --tm-light-secondary --txtColor"
+												role="document"
+											>
+												<div
+													class="flx --flxRow --flx-between-center --width-100 modal-content"
+												>
+													<div class="txt --gap-none">
+														<h5>Facturar</h5>
+														<p class="--txtSize-xs">Facturar venta</p>
+													</div>
+													<button
+														type="button"
+														aria-label="Cerrar modal"
+														data-modal-toggle="bill"
+													>
+														<i
+															class="icon --size-20 fa-solid fa-xmark"
+														></i>
+													</button>
+												</div>
+												<div
+													class="scroll --vertical --width-100 modal-content"
+												>
+													Contenido del modal
+												</div>
+												<div
+													class="flx --flxRow --flx-between-center --width-100 modal-content"
+												>
+													<button class="bttn">Facturar venta</button>
+													<button
+														class="bttnToggle --round:sm-inv"
+														data-modal-toggle="bill"
+													>
+														<i
+															class="icon --hidden-full:sm fa-solid fa-xmark"
+														></i>
+														<i
+															class="icon --hidden-full:sm fa-solid fa-xmark"
+														></i>
+														<span class="--hidden-full:sm-inv">
+															Cerrar
+														</span>
+													</button>
+												</div>
+											</div>
+										</dialog>
 									</li>
 								</ul>
 							</div>
@@ -76,10 +175,5 @@
 			</div>
 		</main>
 	</body>
-	<script type="text/javascript" defer>
-		// Call the function on page load
-		document.addEventListener("DOMContentLoaded", async () => {
-			console.log("Pagina cargada");
-		});
-	</script>
+	<script src="/js/main.js" defer></script>
 </html>

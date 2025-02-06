@@ -26,15 +26,8 @@ def clientes(correr):
    # Consultar un unico cliente
    def consultarUno(identificador):
       cursorObj = correr(f'SELECT * FROM clientes WHERE id = ?', (identificador), False)
-      filas = cursorObj.fetchall()
-
-      for row in filas:
-         idFila = row[0]
-         nombre = row[1]
-         apellido = row[2]
-         direccion = row[3]
-         
-         print(f'Id: {idFila}, Cliente: {nombre} {apellido}, Dirección: {direccion}')
+      
+      return cursorObj.fetchall()[0]
 
    # Consultar varios clientes
    def consultarVarios(ids = None):
@@ -47,15 +40,7 @@ def clientes(correr):
          query = "SELECT * FROM clientes"
          cursorObj = correr(query, persistencia=False)
          
-      filas = cursorObj.fetchall()
-
-      for row in filas:
-         idFila = row[0]
-         nombre = row[1]
-         apellido = row[2]
-         direccion = row[3]
-         
-         print(f'Id: {idFila}, Cliente: {nombre} {apellido}, Dirección: {direccion}')
+      return cursorObj.fetchall()
 
    # Borrar un cliente
    def borrar(identificador):

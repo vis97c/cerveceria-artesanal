@@ -27,14 +27,8 @@ def productos(correr):
    # Consultar un unico producto
    def consultarUno(identificador):
       cursorObj = correr(f'SELECT * FROM productos WHERE id = ?', (identificador), False)
-      filas = cursorObj.fetchall()
 
-      for row in filas:
-         idFila = row[0]
-         nombre = row[1]
-         precioVenta = row[6]
-         
-         print(f'Id: {idFila}, Producto: {nombre}, Precio de venta: {precioVenta}')
+      return cursorObj.fetchall()[0]
 
    # Consultar varios productos
    def consultarVarios(ids = None):
@@ -47,14 +41,7 @@ def productos(correr):
          query = "SELECT * FROM productos"
          cursorObj = correr(query, persistencia=False)
 
-      filas = cursorObj.fetchall()
-
-      for row in filas:
-         idFila = row[0]
-         producto = row[1]
-         precioVenta = row[6]
-         
-         print(f'Id: {idFila}, Producto: {producto}, Precio de venta: {precioVenta}')
+      return cursorObj.fetchall()
 
    # Borrar un producto
    def borrar(identificador):

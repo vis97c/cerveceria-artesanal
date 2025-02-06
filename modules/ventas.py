@@ -23,14 +23,8 @@ def ventas(correr):
    # Consultar una unica venta
    def consultarUna(factura):
       cursorObj = correr(f'SELECT * FROM ventas WHERE factura = ?', (factura), False)
-      filas = cursorObj.fetchall()
-
-      for row in filas:
-         idFila = row[0]
-         factura = row[1]
-         producto = row[3]
-         
-         print(f'Id: {idFila}, Factura: {factura}, Producto: {producto}')
+      
+      return cursorObj.fetchall()[0]
 
    # Consultar varias ventas
    def consultarVarias(facturas = None):
@@ -42,14 +36,8 @@ def ventas(correr):
       else:
          query = "SELECT * FROM ventas"
          cursorObj = correr(query, persistencia=False)
-      filas = cursorObj.fetchall()
-
-      for row in filas:
-         idFila = row[0]
-         factura = row[1]
-         producto = row[3]
-         
-         print(f'Id: {idFila}, Factura: {factura}, Producto: {producto}')
+      
+      return cursorObj.fetchall()
 
    # Borrar un venta con un producto especifico
    def borrar(factura, producto):
