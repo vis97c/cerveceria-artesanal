@@ -8,6 +8,7 @@ from datetime import datetime
 
 from utils.db import conectar
 from modules.productos import productos
+from modules.clientes import clientes
 
 # INICIALIZAMOS FLASK
 # Flask es un framework/librería que nos permite generar un servidor web con python
@@ -152,23 +153,108 @@ def main():
 
     # Vista de gestión de clientes
     @app.route("/clientes")
-    def clientes():
+    def clientes_vista():
         return render_template("clientes.html")
 
     # Vista para crear un nuevo cliente
-    @app.route("/clientes/crear")
+    @app.route("/clientes/crear", methods=["GET", "POST"])
     def crear_cliente():
-        return render_template("clientes/crear.html")
+        error = None
+        success = None
+
+        if request.method == "POST":
+            correr, conexion, cerrar = conectar()
+            moduloClientes = clientes(correr)
+
+            try:
+                # Obtener todos los campos del formulario
+                clienteId = request.form.get("id")
+                nombre = request.form.get("nombre")
+                apellido = request.form.get("apellido")
+                direccion = request.form.get("direccion")
+                telefono = request.form.get("telefono")
+                email = request.form.get("email")
+
+                # Crear el cliente con todos los valores
+                moduloClientes["crear"](
+                    (clienteId, nombre, apellido, direccion, telefono, email)
+                )
+                success = f'Cliente con el id "{clienteId}" fue creado exitosamente'
+
+            except Exception as err:
+                print(f"Error al crear cliente: {err}")
+
+                if "UNIQUE constraint failed" in str(err):
+                    error = "Ya existe un cliente con ese ID"
+                else:
+                    error = "Error al crear el cliente"
+
+            cerrar()  # Cerrar la conexión
+
+        return render_template("clientes/crear.html", error=error, success=success)
 
     # Vista para actualizar la direccion de un cliente existente
-    @app.route("/clientes/actualizar")
+    @app.route("/clientes/actualizar", methods=["GET", "POST"])
     def actualizar_cliente():
-        return render_template("clientes/actualizar.html")
+        error = None
+        success = None
+
+        if request.method == "POST":
+            correr, conexion, cerrar = conectar()
+            moduloClientes = clientes(correr)
+
+            try:
+                clienteId = request.form.get("id")
+                nuevaDireccion = request.form.get("direccion")
+
+                # Actualizar direccion del cliente
+                moduloClientes["actualizarDireccion"](clienteId, nuevaDireccion)
+                success = f'Dirección del cliente con id "{clienteId}" actualizada exitosamente'
+
+            except Exception as err:
+                print(f"Error al actualizar dirección: {err}")
+                if str(err) == "NO_EXISTE":
+                    error = "No existe un cliente con ese ID"
+                else:
+                    error = "Error al actualizar la dirección"
+
+            cerrar()  # Cerrar la conexión
+
+        return render_template("clientes/actualizar.html", error=error, success=success)
 
     # Vista para consultar un cliente existente
-    @app.route("/clientes/consultar")
+    @app.route("/clientes/consultar", methods=["GET", "POST"])
     def consultar_cliente():
-        return render_template("clientes/consultar.html")
+        cliente = None
+
+        if request.method == "POST":
+            correr, conexion, cerrar = conectar()
+            moduloClientes = clientes(correr)
+
+            try:
+                clienteId = request.form.get("id")
+                # Obtener cliente con el id
+                resultado = moduloClientes["consultarUno"](clienteId)
+
+                if resultado:
+                    cliente = {
+                        "id": resultado[0],
+                        "nombre": resultado[1],
+                        "apellido": resultado[2],
+                        "direccion": resultado[3],
+                        "telefono": resultado[4],
+                        "email": resultado[5],
+                    }
+                else:
+                    cliente = False  # Indicar que el cliente no existe
+
+            except Exception as err:
+                print(f"Error al consultar cliente: {err}")
+                cliente = False  # Tambien indicamos que no existe si hay error
+
+            cerrar()  # Cerrar la conexión
+
+        return render_template("clientes/consultar.html", cliente=cliente)
 
     # VENTAS
 

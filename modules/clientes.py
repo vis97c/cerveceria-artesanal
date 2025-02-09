@@ -18,7 +18,7 @@ def clientes(correr):
 
     # Crear nuevo cliente
     def crear(valores):
-        correr("INSERT INTO clientes VALUES (?, ?, ?, ?, ?, ?, ?)", valores)
+        correr("INSERT INTO clientes VALUES (?, ?, ?, ?, ?, ?)", valores)
 
     # Actualizar direccion de un cliente existente
     def actualizarDireccion(identificador, nuevoDireccion):
@@ -30,7 +30,7 @@ def clientes(correr):
     # Consultar un unico cliente
     def consultarUno(identificador):
         cursorObj = correr(
-            f"SELECT * FROM clientes WHERE id = ?", (identificador), False
+            f"SELECT * FROM clientes WHERE id = ?", (identificador,), False
         )
 
         return cursorObj.fetchall()[0]
@@ -52,4 +52,9 @@ def clientes(correr):
     def borrar(identificador):
         correr(f"DELETE FROM clientes WHERE id = ?", (identificador))
 
-    return {crear, actualizarNombre, consultarUno, borrar}
+    return {
+        "crear": crear,
+        "actualizarDireccion": actualizarDireccion,
+        "consultarUno": consultarUno,
+        "borrar": borrar,
+    }

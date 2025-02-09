@@ -18,7 +18,7 @@
 			href="https://unpkg.com/@open-xamu-co/ui-styles@^3.0.0-next.29/dist/index.min.css"
 		/>
 		<link rel="stylesheet" href="/css/main.css" />
-		<title>Consultar Cliente - Cervecería artesanal</title>
+		<title>Consultar cliente - Cervecería artesanal</title>
 	</head>
 	<body>
 		<main id="appex" class="--txtColor-dark7">
@@ -43,11 +43,24 @@
 							>
 								<div class="flx --flxColumn --gap-10 --flx-start">
 									<label for="id">ID del cliente</label>
-									<input type="number" id="id" name="id" required class="iTxt" />
+									<input
+										id="id"
+										class="iTxt"
+										type="text"
+										name="id"
+										placeholder="Ej: CC123456789"
+										required
+									/>
 								</div>
-								<button type="submit" class="bttn">Consultar cliente</button>
+								<div>
+									<button type="submit" class="bttn">Consultar cliente</button>
+								</div>
 							</form>
-							{% if cliente %}
+							{% if cliente == False %}
+								<div class="flx --flxColumn --gap-10 --flx-start">
+									<p class="--txtColor-danger">El cliente no existe</p>
+								</div>
+							{% elif cliente %}
 								<div class="flx --flxColumn --gap-10 --flx-start">
 									<h3>Información del cliente</h3>
 									<p>
@@ -59,12 +72,20 @@
 										{{ cliente.nombre }}
 									</p>
 									<p>
+										<strong>Apellido:</strong>
+										{{ cliente.apellido }}
+									</p>
+									<p>
 										<strong>Dirección:</strong>
 										{{ cliente.direccion }}
 									</p>
 									<p>
 										<strong>Teléfono:</strong>
 										{{ cliente.telefono }}
+									</p>
+									<p>
+										<strong>Email:</strong>
+										{{ cliente.email }}
 									</p>
 								</div>
 							{% endif %}

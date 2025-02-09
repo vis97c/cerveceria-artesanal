@@ -18,7 +18,7 @@
 			href="https://unpkg.com/@open-xamu-co/ui-styles@^3.0.0-next.29/dist/index.min.css"
 		/>
 		<link rel="stylesheet" href="/css/main.css" />
-		<title>Crear Cliente - Cervecería artesanal</title>
+		<title>Crear cliente - Cervecería artesanal</title>
 	</head>
 	<body>
 		<main id="appex" class="--txtColor-dark7">
@@ -42,45 +42,88 @@
 								method="POST"
 							>
 								<div class="flx --flxColumn --gap-10 --flx-start">
-									<label for="nombre">Nombre del cliente</label>
+									<label for="id">ID del Cliente</label>
 									<input
 										type="text"
-										id="nombre"
-										name="nombre"
-										required
 										class="iTxt"
+										id="id"
+										name="id"
+										placeholder="Ej: CC123456789"
+										required
 									/>
 								</div>
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<label for="apellido">Apellido del cliente</label>
-									<input type="text" id="nombre" name="nombre" required class="iTxt" />
+								<div class="flx --flxRow --flx-start">
+									<div class="flx --flxColumn --gap-10 --flx-start">
+										<label for="nombre">Nombre</label>
+										<input
+											type="text"
+											class="iTxt"
+											id="nombre"
+											name="nombre"
+											placeholder="Ej: Juan"
+											required
+										/>
+									</div>
+									<div class="flx --flxColumn --gap-10 --flx-start">
+										<label for="apellido">Apellido</label>
+										<input
+											type="text"
+											class="iTxt"
+											id="apellido"
+											name="apellido"
+											placeholder="Ej: Pérez"
+											required
+										/>
+									</div>
 								</div>
 								<div class="flx --flxColumn --gap-10 --flx-start">
 									<label for="direccion">Dirección</label>
 									<input
 										type="text"
+										class="iTxt"
 										id="direccion"
 										name="direccion"
+										placeholder="Ej: Calle 123"
 										required
-										class="iTxt"
 									/>
 								</div>
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<label for="telefono">Teléfono</label>
-									<input
-										type="tel"
-										id="telefono"
-										name="telefono"
-										required
-										class="iTxt"
-									/>
+								<div class="flx --flxRow --flx-start">
+									<div class="flx --flxColumn --gap-10 --flx-start">
+										<label for="telefono">Teléfono</label>
+										<input
+											type="text"
+											class="iTxt"
+											id="telefono"
+											name="telefono"
+											placeholder="Ej: 3001234567"
+											required
+										/>
+									</div>
+									<div class="flx --flxColumn --gap-10 --flx-start">
+										<label for="email">Email</label>
+										<input
+											type="email"
+											class="iTxt"
+											id="email"
+											name="email"
+											placeholder="Ej: juan@correo.com"
+											required
+										/>
+									</div>
 								</div>
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<label for="email">Correo electrónico</label>
-									<input type="text" id="nombre" name="nombre" required class="iTxt" />
+								<div>
+									<button type="submit" class="bttn">Crear Cliente</button>
 								</div>
-								<button type="submit" class="bttn">Crear cliente</button>
 							</form>
+							{% if error %}
+								<div class="flx --flxColumn --gap-10 --flx-start">
+									<p class="--txtColor-danger">{{ error }}</p>
+								</div>
+							{% elif success %}
+								<div class="flx --flxColumn --gap-10 --flx-start">
+									<p class="--txtColor-success">{{ success }}</p>
+								</div>
+							{% endif %}
 						</div>
 					</div>
 				</section>

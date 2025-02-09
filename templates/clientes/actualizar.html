@@ -18,7 +18,7 @@
 			href="https://unpkg.com/@open-xamu-co/ui-styles@^3.0.0-next.29/dist/index.min.css"
 		/>
 		<link rel="stylesheet" href="/css/main.css" />
-		<title>Actualizar Cliente - Cervecería artesanal</title>
+		<title>Actualizar cliente - Cervecería artesanal</title>
 	</head>
 	<body>
 		<main id="appex" class="--txtColor-dark7">
@@ -41,22 +41,43 @@
 								action="/clientes/actualizar"
 								method="POST"
 							>
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<label for="id">ID del cliente</label>
-									<input type="number" id="id" name="id" required class="iTxt" />
+								<div class="flx --flxRow --flx-start">
+									<div class="flx --flxColumn --gap-10 --flx-start">
+										<label for="id">ID del cliente</label>
+										<input
+											id="id"
+											class="iTxt"
+											type="number"
+											name="id"
+											placeholder="Ej: 1"
+											required
+										/>
+									</div>
+									<div class="flx --flxColumn --gap-10 --flx-start">
+										<label for="direccion">Nueva dirección</label>
+										<input
+											id="direccion"
+											class="iTxt"
+											type="text"
+											name="direccion"
+											placeholder="Ej: Calle 123"
+											required
+										/>
+									</div>
 								</div>
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<label for="direccion">Nueva dirección</label>
-									<input
-										type="text"
-										id="direccion"
-										name="direccion"
-										required
-										class="iTxt"
-									/>
+								<div>
+									<button type="submit" class="bttn">Actualizar cliente</button>
 								</div>
-								<button type="submit" class="bttn">Actualizar cliente</button>
 							</form>
+							{% if error %}
+								<div class="flx --flxColumn --gap-10 --flx-start">
+									<p class="--txtColor-danger">{{ error }}</p>
+								</div>
+							{% elif success %}
+								<div class="flx --flxColumn --gap-10 --flx-start">
+									<p class="--txtColor-success">{{ success }}</p>
+								</div>
+							{% endif %}
 						</div>
 					</div>
 				</section>
