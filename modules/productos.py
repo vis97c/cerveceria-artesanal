@@ -35,27 +35,13 @@ def productos(correr):
 
         return cursorObj.fetchall()[0]
 
-    # Consultar varios productos
-    def consultarVarios(ids=None):
-        if ids:
-            # Retornar los ids dados si se especifica
-            placeholders = ",".join("?" for _ in ids)  # (?, ?) segun la cantidad de ids
-            query = f"SELECT * FROM productos WHERE id IN ({placeholders})"
-            cursorObj = correr(query, tuple(ids), False)
-        else:
-            query = "SELECT * FROM productos"
-            cursorObj = correr(query, persistencia=False)
-
-        return cursorObj.fetchall()
-
     # Borrar un producto
     def borrar(identificador):
-        correr(f"DELETE FROM productos WHERE id = ?", (identificador))
+        correr("DELETE FROM productos WHERE id = ?", (identificador))
 
     return {
         "crear": crear,
         "actualizarNombre": actualizarNombre,
         "consultarUno": consultarUno,
-        "consultarVarios": consultarVarios,
         "borrar": borrar,
     }

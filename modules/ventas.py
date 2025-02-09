@@ -10,7 +10,7 @@ def ventas(correr):
       CREATE TABLE IF NOT EXISTS ventas (
          id text,
          factura interger,
-         venta text NOT NULL,
+         cliente text NOT NULL,
          producto text NOT NULL,
          cantidad interger NOT NULL,
          PRIMARY KEY (factura)
@@ -20,34 +20,35 @@ def ventas(correr):
 
     # Crear nueva venta
     def crear(valores):
-        correr("INSERT INTO ventas VALUES (?, ?, ?, ?, ?, ?, ?)", valores)
+        correr("INSERT INTO ventas VALUES (?, ?, ?, ?, ?)", valores)
 
     # Consultar una unica venta
     def consultarUna(factura):
-        cursorObj = correr(f"SELECT * FROM ventas WHERE factura = ?", (factura,), False)
+        cursorObj = correr("SELECT * FROM ventas WHERE factura = ?", (factura,), False)
 
         return cursorObj.fetchall()[0]
 
     # Consultar varias ventas
-    def consultarVarias(facturas=None):
-        if facturas:
-            # Retornar los facturas dados si se especifica
-            placeholders = ",".join(
-                "?" for _ in facturas
-            )  # (?, ?) segun la cantidad de facturas
-            query = f"SELECT * FROM ventas WHERE factura IN ({placeholders})"
-            cursorObj = correr(query, tuple(facturas), False)
+    def consultarVarias(factura=None):
+        if factura:
+            # Retornar los ventas por factura
+            cursorObj = correr(
+                "SELECT * FROM ventas WHERE factura = ?", (factura,), False
+            )
         else:
-            query = "SELECT * FROM ventas"
-            cursorObj = correr(query, persistencia=False)
+            cursorObj = correr("SELECT * FROM ventas", persistencia=False)
 
         return cursorObj.fetchall()
 
     # Borrar un venta con un producto especifico
     def borrar(factura, producto):
         correr(
-            f"DELETE FROM ventas WHERE factura = ? AND producto = ?",
-            (factura, producto),
+            "DELETE FROM ventas WHERE factura = ? AND producto = ?", (factura, producto)
         )
 
-    return {crear, consultarUna, consultarVarias, borrar}
+    return {
+        "crear": crear,
+        "consultarUna": consultarUna,
+        "consultarVarias": consultarVarias,
+        "borrar": borrar,
+    }

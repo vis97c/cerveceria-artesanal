@@ -1,10 +1,14 @@
 {% extends "layout.html" %}
 {% block title %}Gestión de productos{% endblock %}
 {% block back %}
-	<a href="/" class="link">
-		<i class="icon fa-solid fa-arrow-left"></i>
-		<span>Volver a inicio</span>
-	</a>
+	<ul class="flx --flxRow --flx-start-center">
+		<li>
+			<a href="/" class="link" data-tooltip="Volver al inicio" data-tooltip-text>
+				<i class="icon fa-solid fa-chevron-left"></i>
+				<span>Inicio</span>
+			</a>
+		</li>
+	</ul>
 {% endblock %}
 {% block content %}
 	<div class="flx --flxColumn --flx-start --gap-10">

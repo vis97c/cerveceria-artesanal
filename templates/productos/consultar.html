@@ -1,10 +1,20 @@
 {% extends "layout.html" %}
 {% block title %}Consultar producto{% endblock %}
 {% block back %}
-	<a href="/productos" class="link">
-		<i class="icon fa-solid fa-arrow-left"></i>
-		<span>Volver a productos</span>
-	</a>
+	<ul class="flx --flxRow --flx-start-center">
+		<li>
+			<a href="/" class="link" data-tooltip="Volver al inicio" data-tooltip-text>
+				<i class="icon fa-solid fa-chevron-left"></i>
+				<span>Inicio</span>
+			</a>
+		</li>
+		<li>
+			<a href="/productos" class="link" data-tooltip="Volver a productos" data-tooltip-text>
+				<i class="icon fa-solid fa-chevron-left"></i>
+				<span>Productos</span>
+			</a>
+		</li>
+	</ul>
 {% endblock %}
 {% block content %}
 	<form class="flx --flxColumn --gap-20" action="/productos/consultar" method="POST">

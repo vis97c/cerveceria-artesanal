@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}Facturación{% endblock %}
+{% block back %}
+	<ul class="flx --flxRow --flx-start-center">
+		<li>
+			<a href="/" class="link" data-tooltip="Volver al inicio" data-tooltip-text>
+				<i class="icon fa-solid fa-chevron-left"></i>
+				<span>Inicio</span>
+			</a>
+		</li>
+	</ul>
+{% endblock %}
+{% block content %}
+	<form class="flx --flxColumn --gap-20" action="/facturacion" method="POST">
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<label for="id">ID de la factura</label>
+			<input id="id" class="iTxt" type="text" name="id" placeholder="Ej: 123" required />
+		</div>
+		<div>
+			<button type="submit" class="bttn">Ver factura</button>
+		</div>
+	</form>
+	{% if factura == False %}
+		<div class="container py-5">
+			<p class="text-danger">La factura de venta no existe</p>
+		</div>
+	{% endif %}
+{% endblock %}

@@ -1,10 +1,20 @@
 {% extends 'layout.html' %}
 {% block title %}Borrar Venta{% endblock %}
 {% block back %}
-	<a href="/ventas" class="link">
-		<i class="icon fa-solid fa-arrow-left"></i>
-		<span>Volver a ventas</span>
-	</a>
+	<ul class="flx --flxRow --flx-start-center">
+		<li>
+			<a href="/" class="link" data-tooltip="Volver al inicio" data-tooltip-text>
+				<i class="icon fa-solid fa-chevron-left"></i>
+				<span>Inicio</span>
+			</a>
+		</li>
+		<li>
+			<a href="/ventas" class="link" data-tooltip="Volver a ventas" data-tooltip-text>
+				<i class="icon fa-solid fa-chevron-left"></i>
+				<span>Ventas</span>
+			</a>
+		</li>
+	</ul>
 {% endblock %}
 {% block content %}
 	<form class="flx --flxColumn --gap-20" action="/ventas/borrar" method="POST">

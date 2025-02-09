@@ -30,27 +30,14 @@ def clientes(correr):
     # Consultar un unico cliente
     def consultarUno(identificador):
         cursorObj = correr(
-            f"SELECT * FROM clientes WHERE id = ?", (identificador,), False
+            "SELECT * FROM clientes WHERE id = ?", (identificador,), False
         )
 
         return cursorObj.fetchall()[0]
 
-    # Consultar varios clientes
-    def consultarVarios(ids=None):
-        if ids:
-            # Retornar los ids dados si se especifica
-            placeholders = ",".join("?" for _ in ids)  # (?, ?) segun la cantidad de ids
-            query = f"SELECT * FROM clientes WHERE id IN ({placeholders})"
-            cursorObj = correr(query, tuple(ids), False)
-        else:
-            query = "SELECT * FROM clientes"
-            cursorObj = correr(query, persistencia=False)
-
-        return cursorObj.fetchall()
-
     # Borrar un cliente
     def borrar(identificador):
-        correr(f"DELETE FROM clientes WHERE id = ?", (identificador))
+        correr("DELETE FROM clientes WHERE id = ?", (identificador))
 
     return {
         "crear": crear,

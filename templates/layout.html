@@ -35,7 +35,12 @@
 						>
 							{% block back %}{% endblock %}
 							<div class="flx --flxColumn --gap-5">
-								<h4 class="--opacity-05">Cervecería artesanal</h4>
+								<h4 class="flx --flxRow --flx-start-center --gap-10">
+									<i
+										class="icon --size-20 --opacity-07 fa-solid fa-beer-mug-empty "
+									></i>
+									<span class=" --opacity-05">Cervecería artesanal</span>
+								</h4>
 								<h1>{{ self.title() }}</h1>
 							</div>
 							{% block content %}{% endblock %}

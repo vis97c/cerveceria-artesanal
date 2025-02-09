@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="anonymous" />
+		<link rel="preconnect" href="https://unpkg.com/" crossorigin="anonymous" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/@fortawesome/fontawesome-free@^6/css/all.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/bootstrap@^5.3.3/dist/css/bootstrap.min.css"
+		/>
+		<link rel="stylesheet" href="https://unpkg.com/paper-css@^0.3.0/paper.css" />
+		<title>Factura de venta - Cervecería artesanal</title>
+		<style>
+			body {
+				font-family: "Poppins", sans-serif;
+			}
+
+			@media print {
+				.no-print {
+					display: none;
+				}
+			}
+		</style>
+	</head>
+	<body class="A4">
+		<section class="sheet padding-10mm">
+			{% if factura == False %}
+				<div class="container py-5">
+					<p class="text-danger">La factura de venta no existe</p>
+				</div>
+			{% elif factura %}
+				<div class="container py-5">
+					<div class="vstack gap-4">
+						<div class="vstack gap-2">
+							<p class="mb-0">Factura de compra #{{ factura.id }}</p>
+							<h3 class="hstack gap-2 align-items-center mb-0">
+								<i class="fa-solid fa-beer-mug-empty fs-1 "></i>
+								<span>Cervecería artesanal</span>
+							</h3>
+						</div>
+						<div class="vstack gap-2">
+							<h4 class="mb-0">Datos del Cliente:</h4>
+							<p class="mb-0">
+								<strong>Nombre:</strong>
+								{{ factura.cliente.nombre }} {{ factura.cliente.apellido }}
+							</p>
+							<p class="mb-0">
+								<strong>Dirección:</strong>
+								{{ factura.cliente.direccion }}
+							</p>
+							<p class="mb-0">
+								<strong>Teléfono:</strong>
+								{{ factura.cliente.telefono }}
+							</p>
+							<p class="mb-0">
+								<strong>Email:</strong>
+								{{ factura.cliente.email }}
+							</p>
+						</div>
+						<div class="vstack gap-2">
+							<h4 class="mb-0">Productos:</h4>
+							<table class="table table-bordered invoice-table d-print-table">
+								<thead>
+									<tr>
+										<th>ID Producto</th>
+										<th>Nombre</th>
+										<th>Cantidad</th>
+										<th>Precio</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for producto in factura.productos %}
+										<tr>
+											<td>{{ producto.idProducto }}</td>
+											<td>{{ producto.nombre }}</td>
+											<td>{{ producto.cantidad }}</td>
+											<td>${{ producto.precio }}</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+						<h4 class="mb-0">Total: ${{ factura.total }}</h4>
+						<div class="hstack gap-3 no-print">
+							<button class="btn btn-primary" onclick="window.print()">
+								Imprimir Factura
+							</button>
+							<button
+								class="btn btn-secondary"
+								onclick="window.open(`mailto:{{ factura.cliente.email }}?subject=${encodeURI('Factura de venta #{{ factura.id }}')}&body=${encodeURI('Esta es tu factura')}`);"
+							>
+								Enviar por correo
+							</button>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</section>
+	</body>
+</html>

@@ -291,7 +291,7 @@ def main():
 
                 # Crear la venta
                 moduloVentas["crear"](
-                    (ventaId, clienteId, productoId, cantidad, factura)
+                    (ventaId, factura, clienteId, productoId, cantidad)
                 )
                 success = f"Venta con id {ventaId} creada exitosamente"
 
@@ -336,9 +336,85 @@ def main():
     # FACTURACIÓN
 
     # Vista de facturación
-    @app.route("/facturacion")
-    def facturacion():
-        return render_template("facturacion.html")
+    @app.route("/facturacion", methods=["GET", "POST"])
+    def facturacion_vista():
+        factura = None
+
+        if request.method == "POST":
+            # Obtener datos del formulario
+            facturaId = request.form.get("id")
+
+            if facturaId:
+                return redirect(f"/facturacion/{facturaId}")
+            else:
+                factura = False
+
+        return render_template("facturacion/index.html", factura=factura)
+
+    # Vista de factura
+    @app.route("/facturacion/<facturaId>")
+    def ver_factura(facturaId):
+        factura = None
+        correr, conexion, cerrar = conectar()
+        moduloVentas = ventas(correr)
+        moduloClientes = clientes(correr)
+        moduloProductos = productos(correr)
+
+        try:
+            # Obtener factura con el id
+            resultado = moduloVentas["consultarVarias"](facturaId)
+
+            if resultado and len(resultado) > 0:
+                clienteId = resultado[0][2]
+                cliente = moduloClientes["consultarUno"](clienteId)
+                # Definimos la estructura de la factura
+                factura = {
+                    "id": facturaId,
+                    "productos": [],
+                    "cliente": {
+                        "id": clienteId,
+                        "nombre": cliente[1],
+                        "apellido": cliente[2],
+                        "direccion": cliente[3],
+                        "telefono": cliente[4],
+                        "email": cliente[5],
+                    },
+                    "total": 0,
+                }
+
+                for venta in resultado:
+                    productoId = venta[3]
+                    cantidad = venta[4]
+                    producto = moduloProductos["consultarUno"](productoId)
+                    precio = producto[6]
+
+                    # Listar productos
+                    factura["productos"].append(
+                        {
+                            "idProducto": productoId,
+                            "cantidad": cantidad,
+                            # Informacion adicional del producto
+                            "nombre": producto[1],
+                            "peso": producto[2],
+                            "volumen": producto[3],
+                            "vencimiento": producto[4],
+                            "produccion": producto[5],
+                            "precio": precio,
+                        }
+                    )
+
+                    # Sumar al total
+                    factura["total"] += cantidad * precio
+            else:
+                factura = False  # Indicar que la factura no existe
+
+        except Exception as err:
+            print(f"Error al consultar factura: {err}")
+            factura = False  # Tambien indicamos que no existe si hay error
+
+        cerrar()  # Cerrar la conexión
+
+        return render_template("facturacion/factura.html", factura=factura)
 
 
 main()
