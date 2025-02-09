@@ -7,6 +7,7 @@ import atexit
 
 from utils.db import conectar
 from modules.productos import productos
+from modules.clientes import clientes
 
 # INICIALIZAMOS FLASK
 # Flask es un framework/librería que nos permite generar un servidor web con python
@@ -18,6 +19,7 @@ correr, conexion, cerrar = conectar()
 
 # Inicializar módulos
 productos_module = productos(correr)
+clientes_modules = clientes(correr)
 
 # Función principal de la aplicación
 def main():
