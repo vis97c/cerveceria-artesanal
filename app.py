@@ -2,17 +2,20 @@
 # Este es el archivo principal de nuestra aplicación
 # La lógica de los módulos se divide en los archivos de la ruta "/modules" pera luego ser importados aca
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 import atexit
 from datetime import datetime
 
+# Para minimizar el codigo en este archivo separamos la logica por modulos
 from utils.db import conectar
 from modules.productos import productos
 from modules.clientes import clientes
+from modules.ventas import ventas
 
 # INICIALIZAMOS FLASK
 # Flask es un framework/librería que nos permite generar un servidor web con python
 # Los usuarios interactuaran con la aplicación desde su navegador
+# SQlite3 se abre y cierra por cada request para evitar errores debido al multithreading de flask
 app = Flask(__name__, static_url_path="/")
 
 
@@ -45,7 +48,7 @@ def main():
             moduloProductos = productos(correr)
 
             try:
-                # Obtener todos los campos del formulario
+                # Obtener datos del formulario
                 productId = int(request.form.get("id"))
                 nombre = request.form.get("nombre")
                 peso = int(request.form.get("peso"))
@@ -95,11 +98,12 @@ def main():
             moduloProductos = productos(correr)
 
             try:
+                # Obtener datos del formulario
                 productId = int(request.form.get("id"))
-                nuevo_nombre = request.form.get("nombre")
+                nuevoNombre = request.form.get("nombre")
 
                 # Actualizar nombre del producto
-                moduloProductos["actualizarNombre"](productId, nuevo_nombre)
+                moduloProductos["actualizarNombre"](productId, nuevoNombre)
                 success = (
                     f'Producto con el id "{productId}" fue actualizado exitosamente'
                 )
@@ -124,6 +128,7 @@ def main():
             moduloProductos = productos(correr)
 
             try:
+                # Obtener datos del formulario
                 productId = int(request.form.get("id"))
                 # Obtener producto con el id
                 resultado = moduloProductos["consultarUno"](productId)
@@ -167,7 +172,7 @@ def main():
             moduloClientes = clientes(correr)
 
             try:
-                # Obtener todos los campos del formulario
+                # Obtener datos del formulario
                 clienteId = request.form.get("id")
                 nombre = request.form.get("nombre")
                 apellido = request.form.get("apellido")
@@ -204,6 +209,7 @@ def main():
             moduloClientes = clientes(correr)
 
             try:
+                # Obtener datos del formulario
                 clienteId = request.form.get("id")
                 nuevaDireccion = request.form.get("direccion")
 
@@ -260,8 +266,72 @@ def main():
 
     # Vista de ventas
     @app.route("/ventas")
-    def ventas():
+    def ventas_vista():
         return render_template("ventas.html")
+
+    # Vista para crear una nueva venta
+    @app.route("/ventas/crear", methods=["GET", "POST"])
+    def crear_venta():
+        error = None
+        success = None
+
+        if request.method == "POST":
+            correr, conexion, cerrar = conectar()
+            moduloVentas = ventas(correr)
+
+            try:
+                # Obtener datos del formulario
+                clienteId = request.form.get("clienteId")
+                productoId = request.form.get("productoId")
+                cantidad = int(request.form.get("cantidad"))
+                factura = request.form.get("factura")
+
+                # Generar ID de venta
+                ventaId = f"{factura}_{productoId}"
+
+                # Crear la venta
+                moduloVentas["crear"](
+                    (ventaId, clienteId, productoId, cantidad, factura)
+                )
+                success = f"Venta con id {ventaId} creada exitosamente"
+
+            except Exception as err:
+                print(f"Error al crear venta: {err}")
+                if "UNIQUE constraint failed" in str(err):
+                    error = "Ya existe una venta con ese ID"
+                else:
+                    error = "Error al crear la venta"
+
+            cerrar()  # Cerrar la conexión
+
+        return render_template("ventas/crear.html", error=error, success=success)
+
+    # Vista para borrar una venta existente
+    @app.route("/ventas/borrar", methods=["GET", "POST"])
+    def borrar_venta():
+        error = None
+        success = None
+
+        if request.method == "POST":
+            correr, conexion, cerrar = conectar()
+            moduloVentas = ventas(correr)
+
+            try:
+                # Obtener datos del formulario
+                factura = request.form.get("factura")
+                producto = request.form.get("producto")
+
+                # Borrar la venta
+                moduloVentas["borrar"](factura, producto)
+                success = f"Venta de producto {producto} en factura {factura} eliminada exitosamente"
+
+            except Exception as err:
+                print(f"Error al borrar venta: {err}")
+                error = "Error al borrar la venta"
+
+            cerrar()  # Cerrar la conexión
+
+        return render_template("ventas/borrar.html", error=error, success=success)
 
     # FACTURACIÓN
 

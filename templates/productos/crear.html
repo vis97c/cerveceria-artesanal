@@ -1,145 +1,93 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="anonymous" />
-		<link rel="preconnect" href="https://unpkg.com/" crossorigin="anonymous" />
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/@fortawesome/fontawesome-free@^6/css/all.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/@open-xamu-co/ui-styles@^3.0.0-next.29/dist/index.min.css"
-		/>
-		<link rel="stylesheet" href="/css/main.css" />
-		<title>Crear producto - Cervecería artesanal</title>
-	</head>
-	<body>
-		<main id="appex" class="--txtColor-dark7">
-			<div id="login" class="view --flx --minHeight-100">
-				<section class="view-item --minHeightVh-100 --bgColor">
-					<div class="holder --flx-center --gap-30">
-						<div
-							class="flx --flxColumn --flx-center-start --gap-30 --flx --pY --minWidth-50 --maxWidth-100"
-						>
-							<a href="/productos" class="link">
-								<i class="icon fa-solid fa-arrow-left"></i>
-								<span>Volver a productos</span>
-							</a>
-							<div class="flx --flxColumn --gap-5">
-								<h4 class="--opacity-05">Cervecería artesanal</h4>
-								<h1>Crear producto</h1>
-							</div>
-							<form
-								class="flx --flxColumn --gap-20"
-								action="/productos/crear"
-								method="POST"
-							>
-								<div class="flx --flxRow --flx-start">
-									<div class="flx --flxColumn --gap-10 --flx-start">
-										<label for="id">ID del producto</label>
-										<input
-											id="id"
-											class="iTxt"
-											type="number"
-											name="id"
-											placeholder="Ej: 1"
-											required
-										/>
-									</div>
-									<div class="flx --flxColumn --gap-10 --flx-start">
-										<label for="nombre">Nombre del producto</label>
-										<input
-											id="nombre"
-											class="iTxt"
-											type="text"
-											name="nombre"
-											placeholder="Ej: Cerveza Rubia"
-											required
-										/>
-									</div>
-								</div>
-								<div class="flx --flxRow --flx-start">
-									<div class="flx --flxColumn --gap-10 --flx-start">
-										<label for="peso">Peso (gramos)</label>
-										<input
-											id="peso"
-											class="iTxt"
-											type="number"
-											name="peso"
-											placeholder="Ej: 500"
-											required
-										/>
-									</div>
-									<div class="flx --flxColumn --gap-10 --flx-start">
-										<label for="volumen">Volumen (ml)</label>
-										<input
-											id="volumen"
-											class="iTxt"
-											type="number"
-											name="volumen"
-											placeholder="Ej: 330"
-											required
-										/>
-									</div>
-								</div>
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<label for="vencimiento">Fecha de vencimiento</label>
-									<input
-										id="vencimiento"
-										class="iTxt"
-										type="date"
-										name="vencimiento"
-										required
-									/>
-								</div>
-								<div class="flx --flxRow --flx-start">
-									<div class="flx --flxColumn --gap-10 --flx-start">
-										<label for="precioProduccion">Precio de producción</label>
-										<input
-											id="precioProduccion"
-											class="iTxt"
-											type="number"
-											name="precioProduccion"
-											placeholder="Ej: 3000"
-											required
-										/>
-									</div>
-									<div class="flx --flxColumn --gap-10 --flx-start">
-										<label for="precioVenta">Precio de venta</label>
-										<input
-											id="precioVenta"
-											class="iTxt"
-											type="number"
-											name="precioVenta"
-											placeholder="Ej: 5000"
-											required
-										/>
-									</div>
-								</div>
-								<div>
-									<button type="submit" class="bttn">Crear producto</button>
-								</div>
-							</form>
-							{% if error %}
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<p class="--txtColor-danger">{{ error }}</p>
-								</div>
-							{% elif success %}
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<p class="--txtColor-success">{{ success }}</p>
-								</div>
-							{% endif %}
-						</div>
-					</div>
-				</section>
+{% extends "layout.html" %}
+{% block title %}Crear producto{% endblock %}
+{% block back %}
+	<a href="/productos" class="link">
+		<i class="icon fa-solid fa-arrow-left"></i>
+		<span>Volver a productos</span>
+	</a>
+{% endblock %}
+{% block content %}
+	<form class="flx --flxColumn --gap-20" action="/productos/crear" method="POST">
+		<div class="flx --flxRow --flx-start">
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="id">ID del producto</label>
+				<input id="id" class="iTxt" type="number" name="id" placeholder="Ej: 1" required />
 			</div>
-		</main>
-	</body>
-</html>
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="nombre">Nombre del producto</label>
+				<input
+					id="nombre"
+					class="iTxt"
+					type="text"
+					name="nombre"
+					placeholder="Ej: Cerveza Rubia"
+					required
+				/>
+			</div>
+		</div>
+		<div class="flx --flxRow --flx-start">
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="peso">Peso (gramos)</label>
+				<input
+					id="peso"
+					class="iTxt"
+					type="number"
+					name="peso"
+					placeholder="Ej: 500"
+					required
+				/>
+			</div>
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="volumen">Volumen (ml)</label>
+				<input
+					id="volumen"
+					class="iTxt"
+					type="number"
+					name="volumen"
+					placeholder="Ej: 330"
+					required
+				/>
+			</div>
+		</div>
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<label for="vencimiento">Fecha de vencimiento</label>
+			<input id="vencimiento" class="iTxt" type="date" name="vencimiento" required />
+		</div>
+		<div class="flx --flxRow --flx-start">
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="precioProduccion">Precio de producción</label>
+				<input
+					id="precioProduccion"
+					class="iTxt"
+					type="number"
+					name="precioProduccion"
+					placeholder="Ej: 3000"
+					required
+				/>
+			</div>
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="precioVenta">Precio de venta</label>
+				<input
+					id="precioVenta"
+					class="iTxt"
+					type="number"
+					name="precioVenta"
+					placeholder="Ej: 5000"
+					required
+				/>
+			</div>
+		</div>
+		<div>
+			<button type="submit" class="bttn">Crear producto</button>
+		</div>
+	</form>
+	{% if error %}
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<p class="--txtColor-danger">{{ error }}</p>
+		</div>
+	{% elif success %}
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<p class="--txtColor-success">{{ success }}</p>
+		</div>
+	{% endif %}
+{% endblock %}

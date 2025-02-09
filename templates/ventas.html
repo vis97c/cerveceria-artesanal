@@ -1,178 +1,35 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="anonymous" />
-		<link rel="preconnect" href="https://unpkg.com/" crossorigin="anonymous" />
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/@fortawesome/fontawesome-free@^6/css/all.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/@open-xamu-co/ui-styles@^3.0.0-next.29/dist/index.min.css"
-		/>
-		<link rel="stylesheet" href="/css/main.css" />
-		<title>Ventas - Cervecería artesanal</title>
-	</head>
-	<body>
-		<main id="appex" class="--txtColor-dark7">
-			<div id="login" class="view --flx --minHeight-100">
-				<section class="view-item --minHeightVh-100 --bgColor">
-					<div class="holder --flx-center --gap-30">
-						<div
-							class="flx --flxColumn --flx-center-start --gap-30 --flx --pY --minWidth-50 --maxWidth-100"
-						>
-							<a href="/" class="link">
-								<i class="icon fa-solid fa-arrow-left"></i>
-								<span>Volver al inicio</span>
-							</a>
-							<div class="flx --flxColumn --gap-5">
-								<h4 class="--opacity-05">Cervecería artesanal</h4>
-								<h1>Ventas</h1>
-							</div>
-							<div class="flx --flxColumn --flx-start --gap-10">
-								<h4 class="--opacity-05">Menú ventas</h4>
-								<ul class="flx --flxRow-wrap --flx-start --gap-10">
-									<li class="">
-										<button
-											class="bttn"
-											type="button"
-											data-tooltip="Vender productos"
-											data-tooltip-text
-											data-modal-toggle="sell"
-										>
-											Vender
-										</button>
-										<dialog id="sell">
-											<div
-												class="modal flx --flxColumn --flx-start-center --width-auto --maxWidth-100 --tm-light-secondary --txtColor"
-												role="document"
-											>
-												<div
-													class="flx --flxRow --flx-between-center --width-100 modal-content"
-												>
-													<div class="txt --gap-none">
-														<h5>Vender</h5>
-														<p class="--txtSize-xs">Vender productos</p>
-													</div>
-													<button
-														type="button"
-														aria-label="Cerrar modal"
-														data-modal-toggle="sell"
-													>
-														<i
-															class="icon --size-20 fa-solid fa-xmark"
-														></i>
-													</button>
-												</div>
-												<div
-													class="scroll --vertical --width-100 modal-content"
-												>
-													Contenido del modal
-												</div>
-												<div
-													class="flx --flxRow --flx-between-center --width-100 modal-content"
-												>
-													<button class="bttn">Vender producto</button>
-													<button
-														class="bttnToggle --round:sm-inv"
-														data-modal-toggle="sell"
-													>
-														<i
-															class="icon --hidden-full:sm fa-solid fa-xmark"
-														></i>
-														<i
-															class="icon --hidden-full:sm fa-solid fa-xmark"
-														></i>
-														<span class="--hidden-full:sm-inv">
-															Cerrar
-														</span>
-													</button>
-												</div>
-											</div>
-										</dialog>
-									</li>
-									<li class="">
-										<button
-											class="bttn"
-											type="button"
-											data-tooltip="Facturar venta"
-											data-tooltip-text
-											data-modal-toggle="bill"
-										>
-											Facturar
-										</button>
-										<dialog id="bill">
-											<div
-												class="modal flx --flxColumn --flx-start-center --width-auto --maxWidth-100 --tm-light-secondary --txtColor"
-												role="document"
-											>
-												<div
-													class="flx --flxRow --flx-between-center --width-100 modal-content"
-												>
-													<div class="txt --gap-none">
-														<h5>Facturar</h5>
-														<p class="--txtSize-xs">Facturar venta</p>
-													</div>
-													<button
-														type="button"
-														aria-label="Cerrar modal"
-														data-modal-toggle="bill"
-													>
-														<i
-															class="icon --size-20 fa-solid fa-xmark"
-														></i>
-													</button>
-												</div>
-												<div
-													class="scroll --vertical --width-100 modal-content"
-												>
-													Contenido del modal
-												</div>
-												<div
-													class="flx --flxRow --flx-between-center --width-100 modal-content"
-												>
-													<button class="bttn">Facturar venta</button>
-													<button
-														class="bttnToggle --round:sm-inv"
-														data-modal-toggle="bill"
-													>
-														<i
-															class="icon --hidden-full:sm fa-solid fa-xmark"
-														></i>
-														<i
-															class="icon --hidden-full:sm fa-solid fa-xmark"
-														></i>
-														<span class="--hidden-full:sm-inv">
-															Cerrar
-														</span>
-													</button>
-												</div>
-											</div>
-										</dialog>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="txt --pY --txtSize-sm">
-							<p>
-								Desarrollado por
-								<b>Angie Hurtado,</b>
-								<b>Federico Puentes,</b>
-								<b>Santiago Puentes</b>
-								&
-								<b>Victor Saa.</b>
-							</p>
-						</div>
-					</div>
-				</section>
-			</div>
-		</main>
-	</body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Ventas{% endblock %}
+{% block back %}
+	<a href="/" class="link">
+		<i class="icon fa-solid fa-arrow-left"></i>
+		<span>Volver a inicio</span>
+	</a>
+{% endblock %}
+{% block content %}
+	<div class="flx --flxColumn --flx-start --gap-10">
+		<h4 class="--opacity-05">Menú ventas</h4>
+		<ul class="flx --flxRow-wrap --flx-start --gap-10">
+			<li class="">
+				<a
+					class="bttnToggle"
+					href="/ventas/crear"
+					data-tooltip="Vender productos"
+					data-tooltip-text
+				>
+					Vender
+				</a>
+			</li>
+			<li class="">
+				<a
+					class="bttnToggle"
+					href="/ventas/borrar"
+					data-tooltip="Borrar productos de una venta"
+					data-tooltip-text
+				>
+					Borrar
+				</a>
+			</li>
+		</ul>
+	</div>
+{% endblock %}

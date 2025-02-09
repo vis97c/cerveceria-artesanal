@@ -1,39 +1,47 @@
-{% extends "layout.html" %}
-{% block title %}Actualizar cliente{% endblock %}
+{% extends 'layout.html' %}
+{% block title %}Borrar Venta{% endblock %}
 {% block back %}
-	<a href="/clientes" class="link">
+	<a href="/ventas" class="link">
 		<i class="icon fa-solid fa-arrow-left"></i>
-		<span>Volver a clientes</span>
+		<span>Volver a ventas</span>
 	</a>
 {% endblock %}
 {% block content %}
-	<form class="flx --flxColumn --gap-20" action="/clientes/actualizar" method="POST">
+	<form class="flx --flxColumn --gap-20" action="/ventas/borrar" method="POST">
 		<div class="flx --flxRow --flx-start">
 			<div class="flx --flxColumn --gap-10 --flx-start">
-				<label for="id">ID del cliente</label>
-				<input id="id" class="iTxt" type="number" name="id" placeholder="Ej: 1" required />
-			</div>
-			<div class="flx --flxColumn --gap-10 --flx-start">
-				<label for="direccion">Nueva dirección</label>
+				<label for="factura">ID de la Factura</label>
 				<input
-					id="direccion"
 					class="iTxt"
 					type="text"
-					name="direccion"
-					placeholder="Ej: Calle 123"
+					id="factura"
+					name="factura"
+					placeholder="Ej: 123"
+					required
+				/>
+			</div>
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="producto">ID del Producto</label>
+				<input
+					id="producto"
+					class="iTxt"
+					type="text"
+					name="producto"
+					placeholder="Ej: 1"
 					required
 				/>
 			</div>
 		</div>
 		<div>
-			<button type="submit" class="bttn">Actualizar cliente</button>
+			<button type="submit" class="bttn --tm-danger-light">Borrar Venta</button>
 		</div>
 	</form>
 	{% if error %}
 		<div class="flx --flxColumn --gap-10 --flx-start">
 			<p class="--txtColor-danger">{{ error }}</p>
 		</div>
-	{% elif success %}
+	{% endif %}
+	{% if success %}
 		<div class="flx --flxColumn --gap-10 --flx-start">
 			<p class="--txtColor-success">{{ success }}</p>
 		</div>

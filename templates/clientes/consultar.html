@@ -1,98 +1,59 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="anonymous" />
-		<link rel="preconnect" href="https://unpkg.com/" crossorigin="anonymous" />
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/@fortawesome/fontawesome-free@^6/css/all.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/@open-xamu-co/ui-styles@^3.0.0-next.29/dist/index.min.css"
-		/>
-		<link rel="stylesheet" href="/css/main.css" />
-		<title>Consultar cliente - Cervecería artesanal</title>
-	</head>
-	<body>
-		<main id="appex" class="--txtColor-dark7">
-			<div id="login" class="view --flx --minHeight-100">
-				<section class="view-item --minHeightVh-100 --bgColor">
-					<div class="holder --flx-center --gap-30">
-						<div
-							class="flx --flxColumn --flx-center-start --gap-30 --flx --pY --minWidth-50 --maxWidth-100"
-						>
-							<a href="/clientes" class="link">
-								<i class="icon fa-solid fa-arrow-left"></i>
-								<span>Volver a clientes</span>
-							</a>
-							<div class="flx --flxColumn --gap-5">
-								<h4 class="--opacity-05">Cervecería artesanal</h4>
-								<h1>Consultar cliente</h1>
-							</div>
-							<form
-								class="flx --flxColumn --gap-20"
-								action="/clientes/consultar"
-								method="POST"
-							>
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<label for="id">ID del cliente</label>
-									<input
-										id="id"
-										class="iTxt"
-										type="text"
-										name="id"
-										placeholder="Ej: CC123456789"
-										required
-									/>
-								</div>
-								<div>
-									<button type="submit" class="bttn">Consultar cliente</button>
-								</div>
-							</form>
-							{% if cliente == False %}
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<p class="--txtColor-danger">El cliente no existe</p>
-								</div>
-							{% elif cliente %}
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<h3>Información del cliente</h3>
-									<p>
-										<strong>ID:</strong>
-										{{ cliente.id }}
-									</p>
-									<p>
-										<strong>Nombre:</strong>
-										{{ cliente.nombre }}
-									</p>
-									<p>
-										<strong>Apellido:</strong>
-										{{ cliente.apellido }}
-									</p>
-									<p>
-										<strong>Dirección:</strong>
-										{{ cliente.direccion }}
-									</p>
-									<p>
-										<strong>Teléfono:</strong>
-										{{ cliente.telefono }}
-									</p>
-									<p>
-										<strong>Email:</strong>
-										{{ cliente.email }}
-									</p>
-								</div>
-							{% endif %}
-						</div>
-					</div>
-				</section>
-			</div>
-		</main>
-	</body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Consultar cliente{% endblock %}
+{% block back %}
+	<a href="/clientes" class="link">
+		<i class="icon fa-solid fa-arrow-left"></i>
+		<span>Volver a clientes</span>
+	</a>
+{% endblock %}
+{% block content %}
+	<form class="flx --flxColumn --gap-20" action="/clientes/consultar" method="POST">
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<label for="id">ID del cliente</label>
+			<input
+				id="id"
+				class="iTxt"
+				type="text"
+				name="id"
+				placeholder="Ej: CC123456789"
+				required
+			/>
+		</div>
+		<div>
+			<button type="submit" class="bttn">Consultar cliente</button>
+		</div>
+	</form>
+	{% if cliente == False %}
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<p class="--txtColor-danger">El cliente no existe</p>
+		</div>
+	{% elif cliente %}
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<h3>Información del cliente</h3>
+			<p>
+				<strong>ID:</strong>
+				{{ cliente.id }}
+			</p>
+			<p>
+				<strong>Nombre:</strong>
+				{{ cliente.nombre }}
+			</p>
+			<p>
+				<strong>Apellido:</strong>
+				{{ cliente.apellido }}
+			</p>
+			<p>
+				<strong>Dirección:</strong>
+				{{ cliente.direccion }}
+			</p>
+			<p>
+				<strong>Teléfono:</strong>
+				{{ cliente.telefono }}
+			</p>
+			<p>
+				<strong>Email:</strong>
+				{{ cliente.email }}
+			</p>
+		</div>
+	{% endif %}
+{% endblock %}

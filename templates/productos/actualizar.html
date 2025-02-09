@@ -1,88 +1,42 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="anonymous" />
-		<link rel="preconnect" href="https://unpkg.com/" crossorigin="anonymous" />
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/@fortawesome/fontawesome-free@^6/css/all.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/@open-xamu-co/ui-styles@^3.0.0-next.29/dist/index.min.css"
-		/>
-		<link rel="stylesheet" href="/css/main.css" />
-		<title>Actualizar producto - Cervecería artesanal</title>
-	</head>
-	<body>
-		<main id="appex" class="--txtColor-dark7">
-			<div id="login" class="view --flx --minHeight-100">
-				<section class="view-item --minHeightVh-100 --bgColor">
-					<div class="holder --flx-center --gap-30">
-						<div
-							class="flx --flxColumn --flx-center-start --gap-30 --flx --pY --minWidth-50 --maxWidth-100"
-						>
-							<a href="/productos" class="link">
-								<i class="icon fa-solid fa-arrow-left"></i>
-								<span>Volver a productos</span>
-							</a>
-							<div class="flx --flxColumn --gap-5">
-								<h4 class="--opacity-05">Cervecería artesanal</h4>
-								<h1>Actualizar nombre de producto</h1>
-							</div>
-							<form
-								class="flx --flxColumn --gap-20"
-								action="/productos/actualizar"
-								method="POST"
-							>
-								<div class="flx --flxRow --flx-start">
-									<div class="flx --flxColumn --gap-10 --flx-start">
-										<label for="id">ID del producto</label>
-										<input
-											id="id"
-											class="iTxt"
-											type="number"
-											name="id"
-											placeholder="Ej: 1"
-											required
-										/>
-									</div>
-									<div class="flx --flxColumn --gap-10 --flx-start">
-										<label for="nombre">Nuevo nombre</label>
-										<input
-											id="nombre"
-											class="iTxt"
-											type="text"
-											name="nombre"
-											placeholder="Ej: Cerveza Negra"
-											required
-										/>
-									</div>
-								</div>
-								<div>
-									<button type="submit" class="bttn">Actualizar producto</button>
-								</div>
-							</form>
-							{% if error %}
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<p class="--txtColor-danger">{{ error }}</p>
-								</div>
-							{% endif %}
-							{% if success %}
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<p class="--txtColor-success">{{ success }}</p>
-								</div>
-							{% endif %}
-						</div>
-					</div>
-				</section>
+{% extends "layout.html" %}
+{% block title %}Actualizar producto{% endblock %}
+{% block back %}
+	<a href="/productos" class="link">
+		<i class="icon fa-solid fa-arrow-left"></i>
+		<span>Volver a productos</span>
+	</a>
+{% endblock %}
+{% block content %}
+	<form class="flx --flxColumn --gap-20" action="/productos/actualizar" method="POST">
+		<div class="flx --flxRow --flx-start">
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="id">ID del producto</label>
+				<input id="id" class="iTxt" type="number" name="id" placeholder="Ej: 1" required />
 			</div>
-		</main>
-	</body>
-</html>
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="nombre">Nuevo nombre</label>
+				<input
+					id="nombre"
+					class="iTxt"
+					type="text"
+					name="nombre"
+					placeholder="Ej: Cerveza Negra"
+					required
+				/>
+			</div>
+		</div>
+		<div>
+			<button type="submit" class="bttn">Actualizar producto</button>
+		</div>
+	</form>
+	{% if error %}
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<p class="--txtColor-danger">{{ error }}</p>
+		</div>
+	{% endif %}
+	{% if success %}
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<p class="--txtColor-success">{{ success }}</p>
+		</div>
+	{% endif %}
+{% endblock %}

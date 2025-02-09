@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+{% block title %}Crear Venta{% endblock %}
+{% block back %}
+	<a href="/ventas" class="link">
+		<i class="icon fa-solid fa-arrow-left"></i>
+		<span>Volver a ventas</span>
+	</a>
+{% endblock %}
+{% block content %}
+	<form class="flx --flxColumn --gap-20" action="/ventas/crear" method="POST">
+		<div class="flx --flxRow --flx-start">
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="factura">ID de la Factura</label>
+				<input
+					id="factura"
+					class="iTxt"
+					type="text"
+					name="factura"
+					placeholder="Ej: 123"
+					required
+				/>
+			</div>
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="clienteId">ID del Cliente</label>
+				<input
+					id="clienteId"
+					class="iTxt"
+					type="text"
+					name="clienteId"
+					placeholder="Ej: CC123456789"
+					required
+				/>
+			</div>
+		</div>
+		<div class="flx --flxRow --flx-start">
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="productoId">ID del Producto</label>
+				<input
+					id="producto_id"
+					class="iTxt"
+					type="text"
+					name="productoId"
+					placeholder="Ej: 1"
+					required
+				/>
+			</div>
+			<div class="flx --flxColumn --gap-10 --flx-start">
+				<label for="cantidad">Cantidad</label>
+				<input
+					id="cantidad"
+					class="iTxt"
+					type="number"
+					name="cantidad"
+					placeholder="Ej: 5"
+					required
+				/>
+			</div>
+		</div>
+		<div>
+			<button type="submit" class="bttn">Crear Venta</button>
+		</div>
+	</form>
+	{% if error %}
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<p class="--txtColor-danger">{{ error }}</p>
+		</div>
+	{% endif %}
+	{% if success %}
+		<div class="flx --flxColumn --gap-10 --flx-start">
+			<p class="--txtColor-success">{{ success }}</p>
+		</div>
+	{% endif %}
+{% endblock %}
