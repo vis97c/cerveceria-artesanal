@@ -43,7 +43,11 @@
 								</div>
 								<button type="submit" class="bttn">Consultar producto</button>
 							</form>
-							{% if producto %}
+							{% if producto == False %}
+							<div class="flx --flxColumn --gap-10 --flx-start">
+								<p class="--txtColor-danger">El producto no existe</p>
+							</div>
+							{% elif producto %}
 							<div class="flx --flxColumn --gap-10 --flx-start">
 								<h3>Información del producto</h3>
 								<p><strong>ID:</strong> {{ producto.id }}</p>
