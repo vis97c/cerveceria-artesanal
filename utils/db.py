@@ -4,7 +4,7 @@ from sqlite3 import Error
 # Helpers para trabajar con la db
 def conectar():
    try:
-      # Conectar 
+      # Conexión con el archivo tipo db con el que se va a trabajar 
       conexion = sqlite3.connect('cerveceria.db')
 
       # Finalizar conexión de la base de datos dada
