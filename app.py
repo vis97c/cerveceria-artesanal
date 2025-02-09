@@ -36,12 +36,36 @@ def main():
     def productos():
         return render_template('productos.html')
 
-    # VENTAS
+    @app.route('/productos/crear')
+    def crear_producto():
+        return render_template('productos/crear.html')
+
+    @app.route('/productos/actualizar')
+    def actualizar_producto():
+        return render_template('productos/actualizar.html')
+
+    @app.route('/productos/consultar')
+    def consultar_producto():
+        return render_template('productos/consultar.html')
+
+    # CLIENTES
 
     # Vista de gestión de clientes
     @app.route('/clientes')
     def clientes():
         return render_template('clientes.html')
+
+    @app.route('/clientes/crear')
+    def crear_cliente():
+        return render_template('clientes/crear.html')
+
+    @app.route('/clientes/actualizar')
+    def actualizar_cliente():
+        return render_template('clientes/actualizar.html')
+
+    @app.route('/clientes/consultar')
+    def consultar_cliente():
+        return render_template('clientes/consultar.html')
 
     # VENTAS
 
