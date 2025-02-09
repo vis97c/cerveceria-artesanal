@@ -6,7 +6,7 @@ Proyecto de POO
 
 ```bash
 # Start app
-flask --app app run
+flask --app app run --debug
 ```
 
 ## Setup

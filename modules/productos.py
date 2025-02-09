@@ -30,7 +30,7 @@ def productos(correr):
     # Consultar un unico producto
     def consultarUno(identificador):
         cursorObj = correr(
-            f"SELECT * FROM productos WHERE id = ?", (identificador), False
+            "SELECT * FROM productos WHERE id = ?", (identificador,), False
         )
 
         return cursorObj.fetchall()[0]
@@ -52,4 +52,10 @@ def productos(correr):
     def borrar(identificador):
         correr(f"DELETE FROM productos WHERE id = ?", (identificador))
 
-    return {crear, actualizarNombre, consultarUno, consultarVarios, borrar}
+    return {
+        "crear": crear,
+        "actualizarNombre": actualizarNombre,
+        "consultarUno": consultarUno,
+        "consultarVarios": consultarVarios,
+        "borrar": borrar,
+    }

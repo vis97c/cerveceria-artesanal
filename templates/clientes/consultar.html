@@ -36,7 +36,11 @@
 								<h4 class="--opacity-05">Cervecería artesanal</h4>
 								<h1>Consultar cliente</h1>
 							</div>
-							<form class="flx --flxColumn --gap-20" action="/clientes/consultar" method="POST">
+							<form
+								class="flx --flxColumn --gap-20"
+								action="/clientes/consultar"
+								method="POST"
+							>
 								<div class="flx --flxColumn --gap-10 --flx-start">
 									<label for="id">ID del cliente</label>
 									<input type="number" id="id" name="id" required class="iTxt" />
@@ -44,13 +48,25 @@
 								<button type="submit" class="bttn">Consultar cliente</button>
 							</form>
 							{% if cliente %}
-							<div class="flx --flxColumn --gap-10 --flx-start">
-								<h3>Información del cliente</h3>
-								<p><strong>ID:</strong> {{ cliente.id }}</p>
-								<p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
-								<p><strong>Dirección:</strong> {{ cliente.direccion }}</p>
-								<p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
-							</div>
+								<div class="flx --flxColumn --gap-10 --flx-start">
+									<h3>Información del cliente</h3>
+									<p>
+										<strong>ID:</strong>
+										{{ cliente.id }}
+									</p>
+									<p>
+										<strong>Nombre:</strong>
+										{{ cliente.nombre }}
+									</p>
+									<p>
+										<strong>Dirección:</strong>
+										{{ cliente.direccion }}
+									</p>
+									<p>
+										<strong>Teléfono:</strong>
+										{{ cliente.telefono }}
+									</p>
+								</div>
 							{% endif %}
 						</div>
 					</div>
@@ -58,5 +74,4 @@
 			</div>
 		</main>
 	</body>
-	<script src="/js/main.js" defer></script>
 </html>

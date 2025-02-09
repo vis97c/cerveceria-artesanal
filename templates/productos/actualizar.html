@@ -36,22 +36,53 @@
 								<h4 class="--opacity-05">Cervecería artesanal</h4>
 								<h1>Actualizar nombre de producto</h1>
 							</div>
-							<form class="flx --flxColumn --gap-20" action="/productos/actualizar" method="POST">
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<label for="id">ID del producto</label>
-									<input type="number" id="id" name="id" required class="iTxt" />
+							<form
+								class="flx --flxColumn --gap-20"
+								action="/productos/actualizar"
+								method="POST"
+							>
+								<div class="flx --flxRow --flx-start">
+									<div class="flx --flxColumn --gap-10 --flx-start">
+										<label for="id">ID del producto</label>
+										<input
+											id="id"
+											class="iTxt"
+											type="number"
+											name="id"
+											placeholder="Ej: 1"
+											required
+										/>
+									</div>
+									<div class="flx --flxColumn --gap-10 --flx-start">
+										<label for="nombre">Nuevo nombre</label>
+										<input
+											id="nombre"
+											class="iTxt"
+											type="text"
+											name="nombre"
+											placeholder="Ej: Cerveza Negra"
+											required
+										/>
+									</div>
 								</div>
-								<div class="flx --flxColumn --gap-10 --flx-start">
-									<label for="nombre">Nuevo nombre</label>
-									<input type="text" id="nombre" name="nombre" required class="iTxt" />
+								<div>
+									<button type="submit" class="bttn">Actualizar producto</button>
 								</div>
-								<button type="submit" class="bttn">Actualizar producto</button>
 							</form>
+							{% if error %}
+								<div class="flx --flxColumn --gap-10 --flx-start">
+									<p class="--txtColor-danger">{{ error }}</p>
+								</div>
+							{% endif %}
+							{% if success %}
+								<div class="flx --flxColumn --gap-10 --flx-start">
+									<p class="--txtColor-success">{{ success }}</p>
+								</div>
+							{% endif %}
 						</div>
 					</div>
 				</section>
 			</div>
 		</main>
 	</body>
-	<script src="/js/main.js" defer></script>
 </html>

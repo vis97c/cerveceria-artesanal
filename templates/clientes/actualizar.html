@@ -36,14 +36,24 @@
 								<h4 class="--opacity-05">Cervecería artesanal</h4>
 								<h1>Actualizar dirección de cliente</h1>
 							</div>
-							<form class="flx --flxColumn --gap-20" action="/clientes/actualizar" method="POST">
+							<form
+								class="flx --flxColumn --gap-20"
+								action="/clientes/actualizar"
+								method="POST"
+							>
 								<div class="flx --flxColumn --gap-10 --flx-start">
 									<label for="id">ID del cliente</label>
 									<input type="number" id="id" name="id" required class="iTxt" />
 								</div>
 								<div class="flx --flxColumn --gap-10 --flx-start">
 									<label for="direccion">Nueva dirección</label>
-									<input type="text" id="direccion" name="direccion" required class="iTxt" />
+									<input
+										type="text"
+										id="direccion"
+										name="direccion"
+										required
+										class="iTxt"
+									/>
 								</div>
 								<button type="submit" class="bttn">Actualizar cliente</button>
 							</form>
@@ -53,5 +63,4 @@
 			</div>
 		</main>
 	</body>
-	<script src="/js/main.js" defer></script>
 </html>

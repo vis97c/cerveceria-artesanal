@@ -36,24 +36,62 @@
 								<h4 class="--opacity-05">Cervecería artesanal</h4>
 								<h1>Consultar producto</h1>
 							</div>
-							<form class="flx --flxColumn --gap-20" action="/productos/consultar" method="POST">
+							<form
+								class="flx --flxColumn --gap-20"
+								action="/productos/consultar"
+								method="POST"
+							>
 								<div class="flx --flxColumn --gap-10 --flx-start">
 									<label for="id">ID del producto</label>
-									<input type="number" id="id" name="id" required class="iTxt" />
+									<input
+										id="id"
+										class="iTxt"
+										type="number"
+										name="id"
+										placeholder="Ej: 1"
+										required
+									/>
 								</div>
-								<button type="submit" class="bttn">Consultar producto</button>
+								<div>
+									<button type="submit" class="bttn">Consultar producto</button>
+								</div>
 							</form>
 							{% if producto == False %}
-							<div class="flx --flxColumn --gap-10 --flx-start">
-								<p class="--txtColor-danger">El producto no existe</p>
-							</div>
+								<div class="flx --flxColumn --gap-10 --flx-start">
+									<p class="--txtColor-danger">El producto no existe</p>
+								</div>
 							{% elif producto %}
-							<div class="flx --flxColumn --gap-10 --flx-start">
-								<h3>Información del producto</h3>
-								<p><strong>ID:</strong> {{ producto.id }}</p>
-								<p><strong>Nombre:</strong> {{ producto.nombre }}</p>
-								<p><strong>Precio:</strong> ${{ producto.precio }}</p>
-							</div>
+								<div class="flx --flxColumn --gap-10 --flx-start">
+									<h3>Información del producto</h3>
+									<p>
+										<strong>ID:</strong>
+										{{ producto.id }}
+									</p>
+									<p>
+										<strong>Nombre:</strong>
+										{{ producto.nombre }}
+									</p>
+									<p>
+										<strong>Precio de producción:</strong>
+										${{ producto.produccion }}
+									</p>
+									<p>
+										<strong>Precio de venta:</strong>
+										${{ producto.precio }}
+									</p>
+									<p>
+										<strong>Peso:</strong>
+										{{ producto.peso }} g
+									</p>
+									<p>
+										<strong>Volumen:</strong>
+										{{ producto.volumen }} ml
+									</p>
+									<p>
+										<strong>Fecha de vencimiento:</strong>
+										{{ producto.vencimiento }}
+									</p>
+								</div>
 							{% endif %}
 						</div>
 					</div>
@@ -61,5 +99,4 @@
 			</div>
 		</main>
 	</body>
-	<script src="/js/main.js" defer></script>
 </html>
