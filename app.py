@@ -7,7 +7,7 @@ import atexit
 from datetime import datetime
 
 # Para minimizar el codigo en este archivo separamos la logica por modulos
-from utils.db import conectar
+from modules.db import conectar
 from modules.productos import productos
 from modules.clientes import clientes
 from modules.ventas import ventas
@@ -35,7 +35,7 @@ def main():
     # Vista de gestión de productos
     @app.route("/productos")
     def productos_vista():
-        return render_template("productos.html")
+        return render_template("productos/index.html")
 
     # Vista para crear un nuevo producto
     @app.route("/productos/crear", methods=["GET", "POST"])
@@ -159,7 +159,7 @@ def main():
     # Vista de gestión de clientes
     @app.route("/clientes")
     def clientes_vista():
-        return render_template("clientes.html")
+        return render_template("clientes/index.html")
 
     # Vista para crear un nuevo cliente
     @app.route("/clientes/crear", methods=["GET", "POST"])
@@ -267,7 +267,7 @@ def main():
     # Vista de ventas
     @app.route("/ventas")
     def ventas_vista():
-        return render_template("ventas.html")
+        return render_template("ventas/index.html")
 
     # Vista para crear una nueva venta
     @app.route("/ventas/crear", methods=["GET", "POST"])
