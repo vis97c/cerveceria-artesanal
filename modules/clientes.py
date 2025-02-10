@@ -1,7 +1,7 @@
 # Helpers para trabajar con los clientes
 def clientes(correr):
 
-    # Definir y crear tabla de clientes si no existe
+    # Definir y crear tabla de clientes si no existe.
     correr(
         """
       CREATE TABLE IF NOT EXISTS clientes (
@@ -16,18 +16,18 @@ def clientes(correr):
    """
     )
 
-    # Crear nuevo cliente
+    # Crear nuevo cliente.
     def crear(valores):
         correr("INSERT INTO clientes VALUES (?, ?, ?, ?, ?, ?)", valores)
 
-    # Actualizar direccion de un cliente existente
+    # Actualizar direccion de un cliente existente.
     def actualizarDireccion(identificador, nuevoDireccion):
         correr(
             "UPDATE clientes SET direccion = ? WHERE id = ?",
             (nuevoDireccion, identificador),
         )
 
-    # Consultar un unico cliente
+    # Consultar un cliente por su ID.
     def consultarUno(identificador):
         cursorObj = correr(
             "SELECT * FROM clientes WHERE id = ?", (identificador,), False
