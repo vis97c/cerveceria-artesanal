@@ -13,7 +13,7 @@ def ventas(correr):
          cliente text NOT NULL,
          producto text NOT NULL,
          cantidad interger NOT NULL,
-         PRIMARY KEY (factura)
+         PRIMARY KEY (id)
       )
    """
     )

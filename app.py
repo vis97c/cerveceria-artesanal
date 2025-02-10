@@ -55,7 +55,6 @@ def main():
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 productId = int(request.form.get("id"))
                 nombre = request.form.get("nombre")
-                peso = int(request.form.get("peso"))
                 volumen = int(request.form.get("volumen"))
                 precioProduccion = int(request.form.get("precioProduccion"))
                 precioVenta = int(request.form.get("precioVenta"))
@@ -65,12 +64,11 @@ def main():
                 fecha_obj = datetime.strptime(fecha, "%Y-%m-%d")
                 vencimiento = fecha_obj.strftime("%d/%m/%Y")
 
-                # Se usa el diccionario creado en productos.py para llamar la funcion "crear" y crear el producto con todos los valores en la base de datos. 
+                # Se usa el diccionario creado en productos.py para llamar la funcion "crear" y crear el producto con todos los valores en la base de datos.
                 moduloProductos["crear"](
                     (
                         productId,
                         nombre,
-                        peso,
                         volumen,
                         vencimiento,
                         precioProduccion,
@@ -141,11 +139,10 @@ def main():
                     producto = {
                         "id": resultado[0],
                         "nombre": resultado[1],
-                        "peso": resultado[2],
-                        "volumen": resultado[3],
-                        "vencimiento": resultado[4],
-                        "produccion": resultado[5],
-                        "precio": resultado[6],
+                        "volumen": resultado[2],
+                        "vencimiento": resultado[3],
+                        "produccion": resultado[4],
+                        "precio": resultado[5],
                     }
                 else:
                     producto = False  # Indicar que el producto no existe
@@ -176,7 +173,7 @@ def main():
             moduloClientes = clientes(correr)
 
             try:
-                # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("") 
+                # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 clienteId = request.form.get("id")
                 nombre = request.form.get("nombre")
                 apellido = request.form.get("apellido")
@@ -294,6 +291,8 @@ def main():
                 # Generar ID de venta
                 ventaId = f"{factura}_{productoId}"
 
+                print(ventaId)
+
                 # Se usa el diccionario creado en ventas.py para llamar la funcion "crear" y se crea la venta
                 moduloVentas["crear"](
                     (ventaId, factura, clienteId, productoId, cantidad)
@@ -406,7 +405,7 @@ def main():
                     productoId = venta[3]
                     cantidad = venta[4]
                     producto = moduloProductos["consultarUno"](productoId)
-                    precio = producto[6]
+                    precio = producto[5]
 
                     # Listar productos
                     factura["productos"].append(
@@ -415,10 +414,9 @@ def main():
                             "cantidad": cantidad,
                             # Informacion adicional del producto
                             "nombre": producto[1],
-                            "peso": producto[2],
-                            "volumen": producto[3],
-                            "vencimiento": producto[4],
-                            "produccion": producto[5],
+                            "volumen": producto[2],
+                            "vencimiento": producto[3],
+                            "produccion": producto[4],
                             "precio": precio,
                         }
                     )

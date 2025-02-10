@@ -7,7 +7,6 @@ def productos(correr):
       CREATE TABLE IF NOT EXISTS productos (
          id interger,
          nombre text NOT NULL,
-         peso interger NOT NULL,
          volumen interger NOT NULL,
          vencimiento date NOT NULL,
          precioProduccion interger NOT NULL,
@@ -19,7 +18,7 @@ def productos(correr):
 
     # Función que crea un nuevo producto. Recibe los valores de cada producto y los asigna a la tabla productos.
     def crear(valores):
-        correr("INSERT INTO productos VALUES (?, ?, ?, ?, ?, ?, ?)", valores)
+        correr("INSERT INTO productos VALUES (?, ?, ?, ?, ?, ?)", valores)
 
     # Función que actualiza el nombre de un producto existente. Solicita el ID del producto y el nuevo nombre. Luego actualiza el nombre.
     def actualizarNombre(identificador, nuevoNombre):
