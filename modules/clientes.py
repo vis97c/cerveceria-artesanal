@@ -27,7 +27,7 @@ def clientes(correr):
             (nuevoDireccion, identificador),
         )
 
-    # Función que consulta la información de un cliente. A partir del ID del cliente, muestra la información vigente. Para esto se requiere un objeto cursor 
+    # Función que consulta la información de un cliente. A partir del ID del cliente, muestra la información vigente. Para esto se requiere un objeto cursor que recorre la base de datos 
     def consultarUno(identificador):
         cursorObj = correr(
             "SELECT * FROM clientes WHERE id = ?", (identificador,), False
