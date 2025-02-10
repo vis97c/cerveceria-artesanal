@@ -29,7 +29,7 @@ def main():
     # Separamos los módulos de nuestra aplicación en rutas que pueden ser accedidas desde el navegador
     # Ej: http://localhost:5000
 
-    # Ruta del menu de la página de inicio. Es la funcion abajo del @app.route("/") que usara la direccion que esta dentro de los parentesis y el render_template buscara y devolvera el archivo html
+    # Ruta del menu de la página de inicio. La funcion abajo del @app.route("/") usara la direccion que esta dentro de los parentesis y el render_template buscara y devolvera el archivo html
     @app.route("/")
     def index():
         return render_template("index.html")
@@ -52,7 +52,7 @@ def main():
             moduloProductos = productos(correr)
 
             try:
-                # Obtener datos del formulario enviados por el usuario.
+                # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 productId = int(request.form.get("id"))
                 nombre = request.form.get("nombre")
                 peso = int(request.form.get("peso"))
@@ -65,7 +65,7 @@ def main():
                 fecha_obj = datetime.strptime(fecha, "%Y-%m-%d")
                 vencimiento = fecha_obj.strftime("%d/%m/%Y")
 
-                # Crear el producto con todos los valores en la base de datos.
+                # Se usa el diccionario creado en productos.py para llamar la funcion "crear" y crear el producto con todos los valores en la base de datos. 
                 moduloProductos["crear"](
                     (
                         productId,
@@ -102,11 +102,11 @@ def main():
             moduloProductos = productos(correr)
 
             try:
-                # Obtener datos del formulario
+                # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 productId = int(request.form.get("id"))
                 nuevoNombre = request.form.get("nombre")
 
-                # Actualizar nombre del producto
+                # Se usa el diccionario creado en productos.py para llamar la funcion "actualizarNombre" y actualizar el nombre del producto
                 moduloProductos["actualizarNombre"](productId, nuevoNombre)
                 success = (
                     f'Producto con el id "{productId}" fue actualizado exitosamente'
@@ -116,7 +116,7 @@ def main():
                 print(f"Error al actualizar producto: {err}")
                 error = "Error al actualizar el producto"
 
-            cerrar()  # Cerrar la conexión
+            cerrar()  # Cerrar la conexión con la base de datos
 
         return render_template(
             "productos/actualizar.html", error=error, success=success
@@ -132,9 +132,9 @@ def main():
             moduloProductos = productos(correr)
 
             try:
-                # Obtener datos del formulario
+                # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 productId = int(request.form.get("id"))
-                # Obtener producto con el id
+                # Se usa el diccionario creado en productos.py para llamar la funcion "consultarUno" y se obtiene el producto con el id
                 resultado = moduloProductos["consultarUno"](productId)
 
                 if resultado:
@@ -154,7 +154,7 @@ def main():
                 print(f"Error al consultar producto: {err}")
                 producto = False  # Tambien indicamos que no existe si hay error
 
-            cerrar()  # Cerrar la conexión
+            cerrar()  # Cerrar la conexión con la base de datos
 
         return render_template("productos/consultar.html", producto=producto)
 
@@ -176,7 +176,7 @@ def main():
             moduloClientes = clientes(correr)
 
             try:
-                # Obtener datos del formulario
+                # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("") 
                 clienteId = request.form.get("id")
                 nombre = request.form.get("nombre")
                 apellido = request.form.get("apellido")
@@ -184,7 +184,7 @@ def main():
                 telefono = request.form.get("telefono")
                 email = request.form.get("email")
 
-                # Crear el cliente con todos los valores
+                # Se usa el diccionario creado en clientes.py para llamar la funcion "crear" y se crea el cliente con todos los valores
                 moduloClientes["crear"](
                     (clienteId, nombre, apellido, direccion, telefono, email)
                 )
@@ -198,7 +198,7 @@ def main():
                 else:
                     error = "Error al crear el cliente"
 
-            cerrar()  # Cerrar la conexión
+            cerrar()  # Cerrar la conexión con la base de datos
 
         return render_template("clientes/crear.html", error=error, success=success)
 
@@ -213,11 +213,11 @@ def main():
             moduloClientes = clientes(correr)
 
             try:
-                # Obtener datos del formulario
+                # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 clienteId = request.form.get("id")
                 nuevaDireccion = request.form.get("direccion")
 
-                # Actualizar direccion del cliente
+                # Se usa el diccionario creado en clientes.py para llamar la funcion "actualizarDireccion" y se actualiza la direccion del cliente
                 moduloClientes["actualizarDireccion"](clienteId, nuevaDireccion)
                 success = f'Dirección del cliente con id "{clienteId}" actualizada exitosamente'
 
@@ -228,7 +228,7 @@ def main():
                 else:
                     error = "Error al actualizar la dirección"
 
-            cerrar()  # Cerrar la conexión
+            cerrar()  # Cerrar la conexión con la base de datos
 
         return render_template("clientes/actualizar.html", error=error, success=success)
 
@@ -242,8 +242,9 @@ def main():
             moduloClientes = clientes(correr)
 
             try:
+                # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 clienteId = request.form.get("id")
-                # Obtener cliente con el id
+                #  Se usa el diccionario creado en clientes.py para llamar la funcion "consultarUno" y se obtiene el cliente con el id.
                 resultado = moduloClientes["consultarUno"](clienteId)
 
                 if resultado:
@@ -262,7 +263,7 @@ def main():
                 print(f"Error al consultar cliente: {err}")
                 cliente = False  # Tambien indicamos que no existe si hay error
 
-            cerrar()  # Cerrar la conexión
+            cerrar()  # Cerrar la conexión con la base de datos
 
         return render_template("clientes/consultar.html", cliente=cliente)
 
@@ -284,7 +285,7 @@ def main():
             moduloVentas = ventas(correr)
 
             try:
-                # Obtener datos del formulario
+                # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 clienteId = request.form.get("clienteId")
                 productoId = request.form.get("productoId")
                 cantidad = int(request.form.get("cantidad"))
@@ -293,7 +294,7 @@ def main():
                 # Generar ID de venta
                 ventaId = f"{factura}_{productoId}"
 
-                # Crear la venta
+                # Se usa el diccionario creado en ventas.py para llamar la funcion "crear" y se crea la venta
                 moduloVentas["crear"](
                     (ventaId, factura, clienteId, productoId, cantidad)
                 )
@@ -306,7 +307,7 @@ def main():
                 else:
                     error = "Error al crear la venta"
 
-            cerrar()  # Cerrar la conexión
+            cerrar()  # Cerrar la conexión con la base de datos
 
         return render_template("ventas/crear.html", error=error, success=success)
 
@@ -321,11 +322,11 @@ def main():
             moduloVentas = ventas(correr)
 
             try:
-                # Obtener datos del formulario
+                # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 factura = request.form.get("factura")
                 producto = request.form.get("producto")
 
-                # Borrar la venta
+                # Se usa el diccionario creado en ventas.py para llamar la funcion "borrar" y se borra la venta
                 moduloVentas["borrar"](factura, producto)
                 success = f"Venta de producto {producto} en factura {factura} eliminada exitosamente"
 
@@ -333,7 +334,7 @@ def main():
                 print(f"Error al borrar venta: {err}")
                 error = "Error al borrar la venta"
 
-            cerrar()  # Cerrar la conexión
+            cerrar()  # Cerrar la conexión con la base de datos
 
         return render_template("ventas/borrar.html", error=error, success=success)
 
@@ -348,7 +349,7 @@ def main():
             correr, cerrar = conectar()
             moduloVentas = ventas(correr)
 
-            # Obtener datos del formulario
+            # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
             facturaId = request.form.get("id")
 
             if facturaId:
@@ -453,7 +454,7 @@ def main():
             print(f"Error al consultar factura: {err}")
             factura = False  # Tambien indicamos que no existe si hay error
 
-        cerrar()  # Cerrar la conexión
+        cerrar()  # Cerrar la conexión con la base de datos
 
         return render_template(
             "facturacion/factura.html",
