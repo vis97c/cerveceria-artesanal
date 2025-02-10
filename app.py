@@ -1,6 +1,6 @@
 # CERVECERÍA ARTESANAL
 # Este es el archivo principal de nuestra aplicación
-# La lógica de los módulos se divide en los archivos de la ruta "/modules" pera luego ser importados aca
+# La lógica de los módulos se divide en los archivos de la ruta "/modules" pera luego ser importados acá
 
 from flask import Flask, render_template, request, redirect
 from datetime import datetime
@@ -9,7 +9,7 @@ import pdfkit
 # Pdfkit requiere wkhtmltopdf
 config = pdfkit.configuration(wkhtmltopdf="./wkhtmltopdf/bin/wkhtmltopdf.exe")
 
-# Para minimizar el codigo en este archivo separamos la logica por modulos
+# Para minimizar el código en este archivo separamos la lógica por módulos
 from modules.db import conectar
 from modules.productos import productos
 from modules.clientes import clientes
@@ -23,13 +23,13 @@ from modules.correo import enviarCorreo
 app = Flask(__name__, static_url_path="/")
 
 
-# Función principal de la aplicación donde definimos las rutas y vistas.
+# Función principal de la aplicación donde definimos las rutas y vistas
 def main():
     # RUTAS PRINCIPALES
     # Separamos los módulos de nuestra aplicación en rutas que pueden ser accedidas desde el navegador
     # Ej: http://localhost:5000
 
-    # Ruta del menu de la página de inicio. La funcion abajo del @app.route("/") usara la direccion que esta dentro de los parentesis y el render_template buscara y devolvera el archivo html
+    # Ruta del menú de la página de inicio. La función abajo del @app.route("/") usará la dirección que está dentro de los paréntesis y el render_template buscará y devolverá el archivo html
     @app.route("/")
     def index():
         return render_template("index.html")
@@ -41,7 +41,7 @@ def main():
     def productos_vista():
         return render_template("productos/index.html")
 
-    # Vista para crear un nuevo producto, con los metodos para visualizar la pagina ("GET") y para recibir datos ("POST")
+    # Vista para crear un nuevo producto, con los métodos para visualizar la página ("GET") y para recibir datos ("POST")
     @app.route("/productos/crear", methods=["GET", "POST"])
     def crear_producto():
         error = None
@@ -64,7 +64,7 @@ def main():
                 fecha_obj = datetime.strptime(fecha, "%Y-%m-%d")
                 vencimiento = fecha_obj.strftime("%d/%m/%Y")
 
-                # Se usa el diccionario creado en productos.py para llamar la funcion "crear" y crear el producto con todos los valores en la base de datos.
+                # Se usa el diccionario creado en productos.py para llamar la función "crear" y crear el producto con todos los valores en la base de datos.
                 moduloProductos["crear"](
                     (
                         productId,
@@ -104,7 +104,7 @@ def main():
                 productId = int(request.form.get("id"))
                 nuevoNombre = request.form.get("nombre")
 
-                # Se usa el diccionario creado en productos.py para llamar la funcion "actualizarNombre" y actualizar el nombre del producto
+                # Se usa el diccionario creado en productos.py para llamar la función "actualizarNombre" y actualizar el nombre del producto
                 moduloProductos["actualizarNombre"](productId, nuevoNombre)
                 success = (
                     f'Producto con el id "{productId}" fue actualizado exitosamente'
@@ -132,7 +132,7 @@ def main():
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 productId = int(request.form.get("id"))
-                # Se usa el diccionario creado en productos.py para llamar la funcion "consultarUno" y se obtiene el producto con el id
+                # Se usa el diccionario creado en productos.py para llamar la función "consultarUno" y se obtiene el producto con el id
                 resultado = moduloProductos["consultarUno"](productId)
 
                 if resultado:
@@ -149,7 +149,7 @@ def main():
 
             except Exception as err:
                 print(f"Error al consultar producto: {err}")
-                producto = False  # Tambien indicamos que no existe si hay error
+                producto = False  # También indicamos que no existe si hay error
 
             cerrar()  # Cerrar la conexión con la base de datos
 
@@ -199,7 +199,7 @@ def main():
 
         return render_template("clientes/crear.html", error=error, success=success)
 
-    # Vista para actualizar la direccion de un cliente existente
+    # Vista para actualizar la dirección de un cliente existente
     @app.route("/clientes/actualizar", methods=["GET", "POST"])
     def actualizar_cliente():
         error = None
@@ -214,7 +214,7 @@ def main():
                 clienteId = request.form.get("id")
                 nuevaDireccion = request.form.get("direccion")
 
-                # Se usa el diccionario creado en clientes.py para llamar la funcion "actualizarDireccion" y se actualiza la direccion del cliente
+                # Se usa el diccionario creado en clientes.py para llamar la función "actualizarDireccion" y se actualiza la dirección del cliente
                 moduloClientes["actualizarDireccion"](clienteId, nuevaDireccion)
                 success = f'Dirección del cliente con id "{clienteId}" actualizada exitosamente'
 
@@ -241,7 +241,7 @@ def main():
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 clienteId = request.form.get("id")
-                #  Se usa el diccionario creado en clientes.py para llamar la funcion "consultarUno" y se obtiene el cliente con el id.
+                #  Se usa el diccionario creado en clientes.py para llamar la función "consultarUno" y se obtiene el cliente con el id.
                 resultado = moduloClientes["consultarUno"](clienteId)
 
                 if resultado:
@@ -258,7 +258,7 @@ def main():
 
             except Exception as err:
                 print(f"Error al consultar cliente: {err}")
-                cliente = False  # Tambien indicamos que no existe si hay error
+                cliente = False  # También indicamos que no existe si hay error
 
             cerrar()  # Cerrar la conexión con la base de datos
 
@@ -293,7 +293,7 @@ def main():
 
                 print(ventaId)
 
-                # Se usa el diccionario creado en ventas.py para llamar la funcion "crear" y se crea la venta
+                # Se usa el diccionario creado en ventas.py para llamar la función "crear" y se crea la venta
                 moduloVentas["crear"](
                     (ventaId, factura, clienteId, productoId, cantidad)
                 )
@@ -412,7 +412,7 @@ def main():
                         {
                             "idProducto": productoId,
                             "cantidad": cantidad,
-                            # Informacion adicional del producto
+                            # Información adicional del producto
                             "nombre": producto[1],
                             "volumen": producto[2],
                             "vencimiento": producto[3],
@@ -450,7 +450,7 @@ def main():
 
         except Exception as err:
             print(f"Error al consultar factura: {err}")
-            factura = False  # Tambien indicamos que no existe si hay error
+            factura = False  # También indicamos que no existe si hay error
 
         cerrar()  # Cerrar la conexión con la base de datos
 
