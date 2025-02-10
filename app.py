@@ -2,15 +2,19 @@
 # Este es el archivo principal de nuestra aplicación
 # La lógica de los módulos se divide en los archivos de la ruta "/modules" pera luego ser importados aca
 
-from flask import Flask, render_template, request, redirect, url_for
-import atexit
+from flask import Flask, render_template, request, redirect
 from datetime import datetime
+import pdfkit
+
+# Pdfkit requiere wkhtmltopdf
+config = pdfkit.configuration(wkhtmltopdf="./wkhtmltopdf/bin/wkhtmltopdf.exe")
 
 # Para minimizar el codigo en este archivo separamos la logica por modulos
 from modules.db import conectar
 from modules.productos import productos
 from modules.clientes import clientes
 from modules.ventas import ventas
+from modules.correo import enviarCorreo
 
 # INICIALIZAMOS FLASK
 # Flask es un framework/librería que nos permite generar un servidor web con python
@@ -44,7 +48,7 @@ def main():
         success = None
 
         if request.method == "POST":
-            correr, conexion, cerrar = conectar()
+            correr, cerrar = conectar()
             moduloProductos = productos(correr)
 
             try:
@@ -94,7 +98,7 @@ def main():
         success = None
 
         if request.method == "POST":
-            correr, conexion, cerrar = conectar()
+            correr, cerrar = conectar()
             moduloProductos = productos(correr)
 
             try:
@@ -124,7 +128,7 @@ def main():
         producto = None
 
         if request.method == "POST":
-            correr, conexion, cerrar = conectar()
+            correr, cerrar = conectar()
             moduloProductos = productos(correr)
 
             try:
@@ -168,7 +172,7 @@ def main():
         success = None
 
         if request.method == "POST":
-            correr, conexion, cerrar = conectar()
+            correr, cerrar = conectar()
             moduloClientes = clientes(correr)
 
             try:
@@ -205,7 +209,7 @@ def main():
         success = None
 
         if request.method == "POST":
-            correr, conexion, cerrar = conectar()
+            correr, cerrar = conectar()
             moduloClientes = clientes(correr)
 
             try:
@@ -234,7 +238,7 @@ def main():
         cliente = None
 
         if request.method == "POST":
-            correr, conexion, cerrar = conectar()
+            correr, cerrar = conectar()
             moduloClientes = clientes(correr)
 
             try:
@@ -276,7 +280,7 @@ def main():
         success = None
 
         if request.method == "POST":
-            correr, conexion, cerrar = conectar()
+            correr, cerrar = conectar()
             moduloVentas = ventas(correr)
 
             try:
@@ -313,7 +317,7 @@ def main():
         success = None
 
         if request.method == "POST":
-            correr, conexion, cerrar = conectar()
+            correr, cerrar = conectar()
             moduloVentas = ventas(correr)
 
             try:
@@ -341,21 +345,32 @@ def main():
         factura = None
 
         if request.method == "POST":
+            correr, cerrar = conectar()
+            moduloVentas = ventas(correr)
+
             # Obtener datos del formulario
             facturaId = request.form.get("id")
 
             if facturaId:
-                return redirect(f"/facturacion/{facturaId}")
-            else:
-                factura = False
+                # Obtener factura con el id
+                resultado = moduloVentas["consultarVarias"](facturaId)
+
+                cerrar()  # Cerrar la conexión
+
+                if resultado and len(resultado) > 0:
+                    return redirect(f"/facturacion/{facturaId}")
+                else:
+                    factura = False
 
         return render_template("facturacion/index.html", factura=factura)
 
     # Vista de factura
-    @app.route("/facturacion/<facturaId>")
+    @app.route("/facturacion/<facturaId>", methods=["GET", "POST"])
     def ver_factura(facturaId):
+        correo = None
         factura = None
-        correr, conexion, cerrar = conectar()
+        pdf = False
+        correr, cerrar = conectar()
         moduloVentas = ventas(correr)
         moduloClientes = clientes(correr)
         moduloProductos = productos(correr)
@@ -364,9 +379,13 @@ def main():
             # Obtener factura con el id
             resultado = moduloVentas["consultarVarias"](facturaId)
 
+            if request.args.get("pdfkit"):
+                pdf = True
+
             if resultado and len(resultado) > 0:
                 clienteId = resultado[0][2]
                 cliente = moduloClientes["consultarUno"](clienteId)
+                email = cliente[5]
                 # Definimos la estructura de la factura
                 factura = {
                     "id": facturaId,
@@ -377,7 +396,7 @@ def main():
                         "apellido": cliente[2],
                         "direccion": cliente[3],
                         "telefono": cliente[4],
-                        "email": cliente[5],
+                        "email": email,
                     },
                     "total": 0,
                 }
@@ -405,6 +424,28 @@ def main():
 
                     # Sumar al total
                     factura["total"] += cantidad * precio
+
+                if request.method == "POST":
+                    try:
+                        # Genera el PDF en memoria
+                        attachment = pdfkit.from_url(
+                            f"{request.scheme}://{request.host}{request.path}?pdfkit=1",
+                            configuration=config,
+                        )
+
+                        # Envía el correo
+                        enviarCorreo(
+                            email,
+                            f"Factura #{facturaId}. Cervecería artesanal",
+                            "Aquí esta tu factura de compra",
+                            attachment,
+                            f"factura_{facturaId}",
+                        )
+                        correo = True
+
+                    except Exception as err:
+                        print(f"Error al enviar correo: {err}")
+                        correo = False
             else:
                 factura = False  # Indicar que la factura no existe
 
@@ -414,7 +455,13 @@ def main():
 
         cerrar()  # Cerrar la conexión
 
-        return render_template("facturacion/factura.html", factura=factura)
+        return render_template(
+            "facturacion/factura.html",
+            factura=factura,
+            correo=correo,
+            pdf=pdf,
+            fecha=datetime.now().astimezone().strftime("%d/%m/%Y %H:%M:%S"),
+        )
 
 
 main()

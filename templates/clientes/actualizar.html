@@ -40,12 +40,8 @@
 		</div>
 	</form>
 	{% if error %}
-		<div class="flx --flxColumn --gap-10 --flx-start">
-			<p class="--txtColor-danger">{{ error }}</p>
-		</div>
+		<p class="--txtColor-danger">{{ error }}</p>
 	{% elif success %}
-		<div class="flx --flxColumn --gap-10 --flx-start">
-			<p class="--txtColor-success">{{ success }}</p>
-		</div>
+		<p class="--txtColor-success">{{ success }}</p>
 	{% endif %}
 {% endblock %}

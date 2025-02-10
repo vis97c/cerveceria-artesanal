@@ -4,7 +4,9 @@
   "description": "Cervecería artesanal",
   "main": "app.py",
   "scripts": {
-    "dev": "flask --app app run --debug"
+    "dev": "flask --app app run --debug",
+    "pip:install": "pip install -r requirements.txt",
+    "pip:freeze": "pip freeze > requirements.txt"
   },
   "repository": {
     "type": "git",

@@ -31,7 +31,7 @@ def conectar():
             return cursorObj
 
         # Establezco la conexión y creo la db fisica
-        return (correr, conexion, cerrar)
+        return (correr, cerrar)
 
     except Error:
         print(Error)

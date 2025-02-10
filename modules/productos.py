@@ -35,13 +35,8 @@ def productos(correr):
 
         return cursorObj.fetchall()[0]
 
-    # Borrar un producto
-    def borrar(identificador):
-        correr("DELETE FROM productos WHERE id = ?", (identificador))
-
     return {
         "crear": crear,
         "actualizarNombre": actualizarNombre,
         "consultarUno": consultarUno,
-        "borrar": borrar,
     }

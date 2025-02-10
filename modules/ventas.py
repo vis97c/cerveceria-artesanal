@@ -1,6 +1,6 @@
 # Helpers para trabajar con los ventas
 #
-# El id de la venta se define asi: "factura_conteo"
+# El id de la venta se define asi: "factura_producto"
 # En la aplicacion se muestran las ventas asociadas a un factura como una sola
 def ventas(correr):
 
@@ -29,6 +29,7 @@ def ventas(correr):
         return cursorObj.fetchall()[0]
 
     # Consultar varias ventas
+    # Metodo usado en facturacion
     def consultarVarias(factura=None):
         if factura:
             # Retornar los ventas por factura
@@ -41,6 +42,7 @@ def ventas(correr):
         return cursorObj.fetchall()
 
     # Borrar un venta con un producto especifico
+    # Metodo usado en facturacion
     def borrar(factura, producto):
         correr(
             "DELETE FROM ventas WHERE factura = ? AND producto = ?", (factura, producto)

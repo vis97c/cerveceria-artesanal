@@ -35,13 +35,8 @@ def clientes(correr):
 
         return cursorObj.fetchall()[0]
 
-    # Borrar un cliente
-    def borrar(identificador):
-        correr("DELETE FROM clientes WHERE id = ?", (identificador))
-
     return {
         "crear": crear,
         "actualizarDireccion": actualizarDireccion,
         "consultarUno": consultarUno,
-        "borrar": borrar,
     }
