@@ -9,7 +9,7 @@ def ventas(correr):
         """
       CREATE TABLE IF NOT EXISTS ventas (
          id text,
-         factura interger,
+         factura interger NOT NULL,
          cliente text NOT NULL,
          producto text NOT NULL,
          cantidad interger NOT NULL,
