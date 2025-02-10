@@ -29,7 +29,7 @@ def main():
     # Separamos los módulos de nuestra aplicación en rutas que pueden ser accedidas desde el navegador
     # Ej: http://localhost:5000
 
-    # Ruta del menu de la página de inicio.
+    # Ruta del menu de la página de inicio. Es la funcion abajo del @app.route("/") que usara la direccion que esta dentro de los parentesis y el render_template buscara y devolvera el archivo html
     @app.route("/")
     def index():
         return render_template("index.html")
@@ -41,7 +41,7 @@ def main():
     def productos_vista():
         return render_template("productos/index.html")
 
-    # Vista para crear un nuevo producto
+    # Vista para crear un nuevo producto, con los metodos para visualizar la pagina ("GET") y para recibir datos ("POST")
     @app.route("/productos/crear", methods=["GET", "POST"])
     def crear_producto():
         error = None
