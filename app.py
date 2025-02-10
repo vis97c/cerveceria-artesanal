@@ -23,18 +23,18 @@ from modules.correo import enviarCorreo
 app = Flask(__name__, static_url_path="/")
 
 
-# Función principal de la aplicación
+# Función principal de la aplicación donde definimos las rutas y vistas.
 def main():
-    # RUTAS
+    # RUTAS PRINCIPALES
     # Separamos los módulos de nuestra aplicación en rutas que pueden ser accedidas desde el navegador
     # Ej: http://localhost:5000
 
-    # Menu principal de la aplicación
+    # Ruta del menu de la página de inicio.
     @app.route("/")
     def index():
         return render_template("index.html")
 
-    # PRODUCTOS
+    # GESTIÓN DE PRODUCTOS
 
     # Vista de gestión de productos
     @app.route("/productos")
@@ -52,7 +52,7 @@ def main():
             moduloProductos = productos(correr)
 
             try:
-                # Obtener datos del formulario
+                # Obtener datos del formulario enviados por el usuario.
                 productId = int(request.form.get("id"))
                 nombre = request.form.get("nombre")
                 peso = int(request.form.get("peso"))
@@ -65,7 +65,7 @@ def main():
                 fecha_obj = datetime.strptime(fecha, "%Y-%m-%d")
                 vencimiento = fecha_obj.strftime("%d/%m/%Y")
 
-                # Crear el producto con todos los valores
+                # Crear el producto con todos los valores en la base de datos.
                 moduloProductos["crear"](
                     (
                         productId,
@@ -87,7 +87,7 @@ def main():
                 else:
                     error = "Error al crear el producto"
 
-            cerrar()  # Cerrar la conexión
+            cerrar()  # Cerrar la conexión con la base de datos
 
         return render_template("productos/crear.html", error=error, success=success)
 
@@ -158,7 +158,7 @@ def main():
 
         return render_template("productos/consultar.html", producto=producto)
 
-    # CLIENTES
+    # GESTIÓN DE CLIENTES
 
     # Vista de gestión de clientes
     @app.route("/clientes")
@@ -266,7 +266,7 @@ def main():
 
         return render_template("clientes/consultar.html", cliente=cliente)
 
-    # VENTAS
+    # GESTIÓN DE VENTAS
 
     # Vista de ventas
     @app.route("/ventas")
