@@ -2,9 +2,11 @@
 # Este es el archivo principal de nuestra aplicación
 # La lógica de los módulos se divide en los archivos de la ruta "/modules" pera luego ser importados acá
 
+import os
+import sys
+import pdfkit
 from flask import Flask, render_template, request, redirect
 from datetime import datetime
-import pdfkit
 
 # Pdfkit requiere wkhtmltopdf
 config = pdfkit.configuration(wkhtmltopdf="./wkhtmltopdf/bin/wkhtmltopdf.exe")
@@ -464,3 +466,10 @@ def main():
 
 
 main()
+
+if __name__ == "__main__":
+    puerto = 5000
+    comando = "start" if sys.platform == "win32" else "open"
+
+    os.system(f"{comando} http://localhost:{puerto}")
+    app.run(port=puerto)
