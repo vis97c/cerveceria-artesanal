@@ -1,10 +1,13 @@
 from modules.db import Conectar
 
-# Helpers para trabajar con los clientes
+# Clase Clientes, para trabajar con los clientes
 class Clientes(Conectar):
 
+    # Definir y crear tabla de clientes si no existe.
     def __init__(self):
-        # Definir y crear tabla de clientes si no existe.
+        # Inicializar la clase Conectar (clase padre)
+        super().__init__()
+        
         self._correr(
             """
         CREATE TABLE IF NOT EXISTS clientes (
@@ -23,7 +26,7 @@ class Clientes(Conectar):
     def crear(self,valores):
         self._correr("INSERT INTO clientes VALUES (?, ?, ?, ?, ?, ?)", valores)
 
-    # Actualizar direccion de un cliente existente.
+    # Actualizar dirección de un cliente existente.
     def actualizarDireccion(self,identificador, nuevoDireccion):
         self._correr(
             "UPDATE clientes SET direccion = ? WHERE id = ?",

@@ -2,9 +2,9 @@ import sqlite3
 from sqlite3 import Error
 
 
-# Helpers para trabajar con la db
+# Clase Conectar, para trabajar con la base de datos
 class Conectar:
-
+    
     def __init__(self):
         try:
             # Conexión con el archivo tipo db con el que se va a trabajar
@@ -12,17 +12,19 @@ class Conectar:
         except Error:
             print(Error)
 
-    # Finalizar conexión de la base de datos dada
+    # Método de conexión con la base de datos dada
     def cerrar(self):
         self.__conexion.close()
 
-    # Ejecutar SQL condicionalmente
+    # Método para ejecutar SQL condicionalmente
     def _correr(self,instruccion, valores=None, persistencia=True):
+        # Pasos:
         # 1. Recorrer base de datos
         cursorObj = self.__conexion.cursor()
 
-        # 2. SQL a ejecutar, 3. Ejecutar la instrucción SQL
-        # Si la tabla existe "IF NOT EXISTS" previene errores
+        # 2. SQL a ejecutar 
+        # 3. Ejecutar la instrucción SQL
+        # Si la tabla existe "IF NOT EXISTS" previene errores###
         if valores:
             cursorObj.execute(instruccion, valores)
         else:
