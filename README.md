@@ -8,14 +8,9 @@ El archivo principal de la aplicación es `app.py`. Este organiza todos los modu
 
 Una maquina con python >= 3.9.10 es necesaria.
 
-## Inicializar servidor de la aplicación.
+## Iniciar aplicación
 
-Se podrá visualizar en el navegador ingresando a la dirección: [http://localhost:5000](http://localhost:5000)
-
-```bash
-# Start app
-flask --app app run
-```
+La aplicación se puede iniciar al ejecutar el archivo app.py, ya sea desde la consola o desde el IDLE. 
 
 ## Setup
 
