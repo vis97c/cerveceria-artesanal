@@ -1,6 +1,8 @@
 # CERVECERÍA ARTESANAL
 # Este es el archivo principal de nuestra aplicación
 # La lógica de los módulos se divide en los archivos de la ruta "/modules" pera luego ser importados acá
+# La aplicación se puede iniciar al ejecutar el archivo app.py, ya sea desde la consola o desde el IDLE.
+
 
 import os
 import sys
@@ -49,6 +51,7 @@ def main():
         success = None
 
         if request.method == "POST":
+            # Se instancia un objeto de la clase Productos para gestionar los productos en la base de datos
             moduloProductos = Productos()
 
             try:
@@ -64,7 +67,7 @@ def main():
                 fecha_obj = datetime.strptime(fecha, "%Y-%m-%d")
                 vencimiento = fecha_obj.strftime("%d/%m/%Y")
 
-                # Se usa el diccionario creado en productos.py para llamar la función "crear" y crear el producto con todos los valores en la base de datos.
+                # Se llama al método "crear" del objeto moduloProductos y crear el producto con todos los valores en la base de datos.
                 moduloProductos.crear(
                     (
                         productId,
@@ -103,7 +106,7 @@ def main():
                 productId = int(request.form.get("id"))
                 nuevoNombre = request.form.get("nombre")
 
-                # Se usa el diccionario creado en productos.py para llamar la función "actualizarNombre" y actualizar el nombre del producto
+                # Se llama al método "actualizarNombre" del objeto moduloProductos y actualizar el nombre del producto
                 moduloProductos.actualizarNombre(productId, nuevoNombre)
                 success = (
                     f'Producto con el id "{productId}" fue actualizado exitosamente'
@@ -125,12 +128,13 @@ def main():
         producto = None
 
         if request.method == "POST":
+             # Se instancia un objeto de la clase Productos para gestionar los productos en la base de datos
             moduloProductos = Productos()
 
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 productId = int(request.form.get("id"))
-                # Se usa el diccionario creado en productos.py para llamar la función "consultarUno" y se obtiene el producto con el id
+                # Se llama al método "consultarUno" del objeto moduloProductos y se obtiene el producto con el id
                 resultado = moduloProductos.consultarUno(productId)
 
                 if resultado:
@@ -167,6 +171,7 @@ def main():
         success = None
 
         if request.method == "POST":
+            # Se instancia un objeto de la clase Clientes para gestionar los clientes en la base de datos
             moduloClientes = Clientes()
 
             try:
@@ -178,7 +183,7 @@ def main():
                 telefono = request.form.get("telefono")
                 email = request.form.get("email")
 
-                # Se usa el diccionario creado en clientes.py para llamar la funcion "crear" y se crea el cliente con todos los valores
+                # Se llama al método "crear" del objeto moduloClientes y se crea el cliente con todos los valores
                 moduloClientes.crear(
                     (clienteId, nombre, apellido, direccion, telefono, email)
                 )
@@ -203,6 +208,7 @@ def main():
         success = None
 
         if request.method == "POST":
+            # Se instancia un objeto de la clase Clientes para gestionar los clientes en la base de datos
             moduloClientes = Clientes()
 
             try:
@@ -210,7 +216,7 @@ def main():
                 clienteId = request.form.get("id")
                 nuevaDireccion = request.form.get("direccion")
 
-                # Se usa el diccionario creado en clientes.py para llamar la función "actualizarDireccion" y se actualiza la dirección del cliente
+                # Se llama al método "actualizarDireccion" del objeto moduloClientes y se actualiza la dirección del cliente
                 moduloClientes.actualizarDireccion(clienteId, nuevaDireccion)
                 success = f'Dirección del cliente con id "{clienteId}" actualizada exitosamente'
 
@@ -231,12 +237,13 @@ def main():
         cliente = None
 
         if request.method == "POST":
+            # Se instancia un objeto de la clase Clientes para gestionar los clientes en la base de datos
             moduloClientes = Clientes()
 
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 clienteId = request.form.get("id")
-                #  Se usa el diccionario creado en clientes.py para llamar la función "consultarUno" y se obtiene el cliente con el id.
+                # Se llama al método "consultarUno" del objeto moduloClientes y se obtiene el cliente con el id.
                 resultado = moduloClientes.consultarUno(clienteId)
 
                 if resultado:
@@ -273,6 +280,7 @@ def main():
         success = None
 
         if request.method == "POST":
+            # Se instancia un objeto de la clase Ventas para gestionar las ventas en la base de datos
             moduloVentas = Ventas()
 
             try:
@@ -287,7 +295,7 @@ def main():
 
                 print(ventaId)
 
-                # Se usa el diccionario creado en ventas.py para llamar la función "crear" y se crea la venta
+                #  Se llama al método "crear" del objeto moduloVentas y se crea la venta
                 moduloVentas.crear(
                     (ventaId, factura, clienteId, productoId, cantidad)
                 )
@@ -310,15 +318,16 @@ def main():
         error = None
         success = None
 
-        if request.method == "POST": 
-            moduloVentas = Ventas(correr)
+        if request.method == "POST":
+            # Se instancia un objeto de la clase Ventas para gestionar las ventas en la base de datos
+            moduloVentas = Ventas()
 
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
                 factura = request.form.get("factura")
                 producto = request.form.get("producto")
 
-                # Se usa el diccionario creado en ventas.py para llamar la funcion "borrar" y se borra la venta
+                # Se llama al método "borrar" del objeto moduloVentas y se borra la venta
                 moduloVentas.borrar(factura, producto)
                 success = f"Venta de producto {producto} en factura {factura} eliminada exitosamente"
 
@@ -338,7 +347,8 @@ def main():
         factura = None
 
         if request.method == "POST":
-            moduloVentas = Ventas(correr)
+            # Se instancia un objeto de la clase Ventas para obtener datos de las ventas en la base de datos
+            moduloVentas = Ventas()
 
             # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
             facturaId = request.form.get("id")
@@ -362,6 +372,7 @@ def main():
         correo = None
         factura = None
         pdf = False
+        # Se instancian los objeto de las clases Ventas, Clientes y Productos para obtener informacion de la base de datos
         moduloVentas = Ventas()
         moduloClientes = Clientes()
         moduloProductos = Productos()
