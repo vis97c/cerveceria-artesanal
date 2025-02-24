@@ -3,7 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 
-    # Función que crea el mensaje 
+    # Método que crea el mensaje 
 def enviarCorreo(destino, asunto, cuerpo, pdf=False, pdfName="factura"):
     # Crea el mensaje
     message = MIMEMultipart()
@@ -11,10 +11,10 @@ def enviarCorreo(destino, asunto, cuerpo, pdf=False, pdfName="factura"):
     message["To"] = destino
     message["Subject"] = asunto
 
-    # Función que agrega el cuerpo del mensaje en UTF-8
+    # Método que agrega el cuerpo del mensaje en UTF-8
     message.attach(MIMEText(cuerpo, "plain", "utf-8"))
 
-    # Función que grega el PDF como adjunto
+    # Método que agrega el PDF como adjunto
     if pdf:
         pdf_attachment = MIMEApplication(pdf, _subtype="pdf")
         pdf_attachment.add_header(
@@ -22,7 +22,7 @@ def enviarCorreo(destino, asunto, cuerpo, pdf=False, pdfName="factura"):
         )
         message.attach(pdf_attachment)
 
-    # Envía el correo
+    # Método que envía el correo
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.ehlo()
         server.login(message["From"], "qdxz vyzb bgrn laap")

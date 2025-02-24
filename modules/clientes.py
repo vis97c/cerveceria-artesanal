@@ -3,9 +3,9 @@ from modules.db import Conectar
 # Clase Clientes, para trabajar con los clientes
 class Clientes(Conectar):
 
-    # Definir y crear tabla de clientes si no existe.
+    # Método que define y crea la tabla de clientes si no existe.
     def __init__(self):
-        # Inicializar la clase Conectar (clase padre)
+        # Inicializar la clase Conectar (clase padre).
         super().__init__()
         
         self._correr(
@@ -22,18 +22,18 @@ class Clientes(Conectar):
     """
         )
 
-    # Crear nuevo cliente.
+    # Método que crea un nuevo cliente.
     def crear(self,valores):
         self._correr("INSERT INTO clientes VALUES (?, ?, ?, ?, ?, ?)", valores)
 
-    # Actualizar dirección de un cliente existente.
+    # Método que actualiza dirección de un cliente existente.
     def actualizarDireccion(self,identificador, nuevoDireccion):
         self._correr(
             "UPDATE clientes SET direccion = ? WHERE id = ?",
             (nuevoDireccion, identificador),
         )
 
-    # Consultar un cliente por su ID.
+    # Método que consulta un cliente por su ID.
     def consultarUno(self,identificador):
         cursorObj = self._correr(
             "SELECT * FROM clientes WHERE id = ?", (identificador,), False
