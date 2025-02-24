@@ -3,35 +3,36 @@ from sqlite3 import Error
 
 
 # Helpers para trabajar con la db
-def conectar():
-    try:
-        # Conexión con el archivo tipo db con el que se va a trabajar
-        conexion = sqlite3.connect("cerveceria.db")
+class Conectar:
 
-        # Finalizar conexión de la base de datos dada
-        def cerrar():
-            conexion.close()
+    def __init__(self):
+        try:
+            # Conexión con el archivo tipo db con el que se va a trabajar
+            self.__conexion = sqlite3.connect("cerveceria.db")
+        except Error:
+            print(Error)
 
-        # Ejecutar SQL condicionalmente
-        def correr(instruccion, valores=None, persistencia=True):
-            # 1. Recorrer base de datos
-            cursorObj = conexion.cursor()
+    # Finalizar conexión de la base de datos dada
+    def cerrar(self):
+        self.__conexion.close()
 
-            # 2. SQL a ejecutar, 3. Ejecutar la instrucción SQL
-            # Si la tabla existe "IF NOT EXISTS" previene errores
-            if valores:
-                cursorObj.execute(instruccion, valores)
-            else:
-                cursorObj.execute(instruccion)
+    # Ejecutar SQL condicionalmente
+    def _correr(self,instruccion, valores=None, persistencia=True):
+        # 1. Recorrer base de datos
+        cursorObj = self.__conexion.cursor()
 
-            # 4. Persistencia con el commit
-            if persistencia:
-                conexion.commit()
+        # 2. SQL a ejecutar, 3. Ejecutar la instrucción SQL
+        # Si la tabla existe "IF NOT EXISTS" previene errores
+        if valores:
+            cursorObj.execute(instruccion, valores)
+        else:
+            cursorObj.execute(instruccion)
 
-            return cursorObj
+        # 4. Persistencia con el commit
+        if persistencia:
+            self.__conexion.commit()
 
-        # Establezco la conexión y creo la db física
-        return (correr, cerrar)
+        return cursorObj
+        
 
-    except Error:
-        print(Error)
+    

@@ -12,10 +12,9 @@ from datetime import datetime
 config = pdfkit.configuration(wkhtmltopdf="./wkhtmltopdf/bin/wkhtmltopdf.exe")
 
 # Para minimizar el código en este archivo separamos la lógica por módulos
-from modules.db import conectar
-from modules.productos import productos
-from modules.clientes import clientes
-from modules.ventas import ventas
+from modules.productos import Productos
+from modules.clientes import Clientes
+from modules.ventas import Ventas
 from modules.correo import enviarCorreo
 
 # INICIALIZAMOS FLASK
@@ -50,8 +49,7 @@ def main():
         success = None
 
         if request.method == "POST":
-            correr, cerrar = conectar()
-            moduloProductos = productos(correr)
+            moduloProductos = Productos()
 
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
@@ -67,7 +65,7 @@ def main():
                 vencimiento = fecha_obj.strftime("%d/%m/%Y")
 
                 # Se usa el diccionario creado en productos.py para llamar la función "crear" y crear el producto con todos los valores en la base de datos.
-                moduloProductos["crear"](
+                moduloProductos.crear(
                     (
                         productId,
                         nombre,
@@ -87,7 +85,7 @@ def main():
                 else:
                     error = "Error al crear el producto"
 
-            cerrar()  # Cerrar la conexión con la base de datos
+            moduloProductos.cerrar()  # Cerrar la conexión con la base de datos
 
         return render_template("productos/crear.html", error=error, success=success)
 
@@ -98,8 +96,7 @@ def main():
         success = None
 
         if request.method == "POST":
-            correr, cerrar = conectar()
-            moduloProductos = productos(correr)
+            moduloProductos = Productos()
 
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
