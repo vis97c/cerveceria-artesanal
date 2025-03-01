@@ -24,7 +24,8 @@
 				<input
 					id="factura"
 					class="iTxt"
-					type="text"
+					type="number"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
 					name="factura"
 					placeholder="Ej: 123"
 					required
@@ -35,9 +36,10 @@
 				<input
 					id="clienteId"
 					class="iTxt"
-					type="text"
+					type="number"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
 					name="clienteId"
-					placeholder="Ej: CC123456789"
+					placeholder="Ej: 123456789"
 					required
 				/>
 			</div>
@@ -48,7 +50,8 @@
 				<input
 					id="productoId"
 					class="iTxt"
-					type="text"
+					type="number"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
 					name="productoId"
 					placeholder="Ej: 1"
 					required
@@ -60,6 +63,7 @@
 					id="cantidad"
 					class="iTxt"
 					type="number"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
 					name="cantidad"
 					placeholder="Ej: 5"
 					required

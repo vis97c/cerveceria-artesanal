@@ -20,7 +20,15 @@
 	<form class="flx --flxColumn --gap-20" action="/productos/consultar" method="POST">
 		<div class="flx --flxColumn --gap-10 --flx-start">
 			<label for="id">ID del producto</label>
-			<input id="id" class="iTxt" type="number" name="id" placeholder="Ej: 1" required />
+			<input
+				id="id"
+				class="iTxt"
+				type="number"
+				oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+				name="id"
+				placeholder="Ej: 1"
+				required
+			/>
 		</div>
 		<div>
 			<button type="submit" class="bttn">Consultar producto</button>

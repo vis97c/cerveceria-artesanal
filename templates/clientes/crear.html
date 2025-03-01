@@ -21,11 +21,12 @@
 		<div class="flx --flxColumn --gap-10 --flx-start">
 			<label for="id">ID del Cliente</label>
 			<input
-				type="text"
-				class="iTxt"
 				id="id"
+				class="iTxt"
+				type="number"
+				oninput="this.value = this.value.replace(/[^0-9]/g,'')"
 				name="id"
-				placeholder="Ej: CC123456789"
+				placeholder="Ej: 123456789"
 				required
 			/>
 		</div>

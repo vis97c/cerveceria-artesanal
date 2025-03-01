@@ -14,7 +14,15 @@
 	<form class="flx --flxColumn --gap-20" action="/facturacion" method="POST">
 		<div class="flx --flxColumn --gap-10 --flx-start">
 			<label for="id">ID de la factura</label>
-			<input id="id" class="iTxt" type="text" name="id" placeholder="Ej: 123" required />
+			<input
+				id="id"
+				class="iTxt"
+				type="number"
+				oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+				name="id"
+				placeholder="Ej: 123"
+				required
+			/>
 		</div>
 		<div>
 			<button type="submit" class="bttn">Ver factura</button>
