@@ -75,11 +75,12 @@
 							<table class="table table-bordered invoice-table d-print-table">
 								<thead>
 									<tr>
-										<th>ID Producto</th>
+										<th>ID</th>
 										<th>Nombre</th>
 										<th>Cantidad</th>
 										<th>Volumen</th>
-										<th>Precio</th>
+										<th>$Unidad</th>
+										<th style="background-color: rgba(0,0,0,0.1)">$Total</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -90,6 +91,9 @@
 											<td>{{ producto.cantidad }}</td>
 											<td>{{ producto.volumen }}</td>
 											<td>${{ producto.precio }}</td>
+											<td style="background-color: rgba(0,0,0,0.1)">
+												${{ producto.precio * producto.cantidad }}
+											</td>
 										</tr>
 									{% endfor %}
 								</tbody>

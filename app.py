@@ -128,7 +128,7 @@ def main():
         producto = None
 
         if request.method == "POST":
-             # Se instancia un objeto de la clase Productos para gestionar los productos en la base de datos
+            # Se instancia un objeto de la clase Productos para gestionar los productos en la base de datos
             moduloProductos = Productos()
 
             try:
@@ -176,7 +176,7 @@ def main():
 
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
-                clienteId = request.form.get("id")
+                clienteId = int(request.form.get("id"))
                 nombre = request.form.get("nombre")
                 apellido = request.form.get("apellido")
                 direccion = request.form.get("direccion")
@@ -213,7 +213,7 @@ def main():
 
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
-                clienteId = request.form.get("id")
+                clienteId = int(request.form.get("id"))
                 nuevaDireccion = request.form.get("direccion")
 
                 # Se llama al método "actualizarDireccion" del objeto moduloClientes y se actualiza la dirección del cliente
@@ -242,7 +242,7 @@ def main():
 
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
-                clienteId = request.form.get("id")
+                clienteId = int(request.form.get("id"))
                 # Se llama al método "consultarUno" del objeto moduloClientes y se obtiene el cliente con el id.
                 resultado = moduloClientes.consultarUno(clienteId)
 
@@ -285,20 +285,16 @@ def main():
 
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
-                clienteId = request.form.get("clienteId")
-                productoId = request.form.get("productoId")
+                clienteId = int(request.form.get("clienteId"))
+                productoId = int(request.form.get("productoId"))
                 cantidad = int(request.form.get("cantidad"))
-                factura = request.form.get("factura")
+                factura = int(request.form.get("factura"))
 
                 # Generar ID de venta
                 ventaId = f"{factura}_{productoId}"
 
-                print(ventaId)
-
                 #  Se llama al método "crear" del objeto moduloVentas y se crea la venta
-                moduloVentas.crear(
-                    (ventaId, factura, clienteId, productoId, cantidad)
-                )
+                moduloVentas.crear((ventaId, factura, clienteId, productoId, cantidad))
                 success = f"Venta con id {ventaId} creada exitosamente"
 
             except Exception as err:
@@ -324,8 +320,8 @@ def main():
 
             try:
                 # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
-                factura = request.form.get("factura")
-                producto = request.form.get("producto")
+                factura = int(request.form.get("factura"))
+                producto = int(request.form.get("producto"))
 
                 # Se llama al método "borrar" del objeto moduloVentas y se borra la venta
                 moduloVentas.borrar(factura, producto)
@@ -351,7 +347,7 @@ def main():
             moduloVentas = Ventas()
 
             # Obtenemos datos del formulario enviados por el usuario en el html con request.from.get("")
-            facturaId = request.form.get("id")
+            facturaId = int(request.form.get("id"))
 
             if facturaId:
                 # Obtener factura con el id
@@ -454,7 +450,7 @@ def main():
             print(f"Error al consultar factura: {err}")
             factura = False  # También indicamos que no existe si hay error
 
-          # Cerrar la conexión con la base de datos
+        # Cerrar la conexión con la base de datos
         moduloProductos.cerrar()
         moduloVentas.cerrar()
         moduloClientes.cerrar()

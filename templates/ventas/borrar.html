@@ -22,9 +22,10 @@
 			<div class="flx --flxColumn --gap-10 --flx-start">
 				<label for="factura">ID de la Factura</label>
 				<input
-					class="iTxt"
-					type="text"
 					id="factura"
+					class="iTxt"
+					type="number"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
 					name="factura"
 					placeholder="Ej: 123"
 					required
@@ -35,7 +36,8 @@
 				<input
 					id="producto"
 					class="iTxt"
-					type="text"
+					type="number"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
 					name="producto"
 					placeholder="Ej: 1"
 					required

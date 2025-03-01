@@ -3,7 +3,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 
-    # Método que crea el mensaje 
+
+# Método que crea el mensaje
 def enviarCorreo(destino, asunto, cuerpo, pdf=False, pdfName="factura"):
     # Crea el mensaje
     message = MIMEMultipart()
@@ -27,4 +28,3 @@ def enviarCorreo(destino, asunto, cuerpo, pdf=False, pdfName="factura"):
         server.ehlo()
         server.login(message["From"], "qdxz vyzb bgrn laap")
         server.sendmail(message["From"], destino, message.as_string())
-

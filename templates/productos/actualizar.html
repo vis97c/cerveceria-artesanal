@@ -21,7 +21,15 @@
 		<div class="flx --flxRow --flx-start">
 			<div class="flx --flxColumn --gap-10 --flx-start">
 				<label for="id">ID del producto</label>
-				<input id="id" class="iTxt" type="number" name="id" placeholder="Ej: 1" required />
+				<input
+					id="id"
+					class="iTxt"
+					type="number"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+					name="id"
+					placeholder="Ej: 1"
+					required
+				/>
 			</div>
 			<div class="flx --flxColumn --gap-10 --flx-start">
 				<label for="nombre">Nuevo nombre</label>
