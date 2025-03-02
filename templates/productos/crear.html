@@ -18,8 +18,8 @@
 {% endblock %}
 {% block content %}
 	<form class="flx --flxColumn --gap-20" action="/productos/crear" method="POST">
-		<div class="flx --flxRow --flx-start">
-			<div class="flx --flxColumn --gap-10 --flx-start">
+		<div class="flx --flxRow-wrap --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="id">ID del producto</label>
 				<input
 					id="id"
@@ -31,7 +31,7 @@
 					required
 				/>
 			</div>
-			<div class="flx --flxColumn --gap-10 --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="nombre">Nombre del producto</label>
 				<input
 					id="nombre"
@@ -43,7 +43,7 @@
 				/>
 			</div>
 		</div>
-		<div class="flx --flxRow --flx-start">
+		<div class="flx --flxRow-wrap --flx-start">
 			<div class="flx --flxColumn --gap-10 --flx-start --width-100">
 				<label for="volumen">Volumen (ml)</label>
 				<input
@@ -61,8 +61,8 @@
 				<input id="vencimiento" class="iTxt" type="date" name="vencimiento" required />
 			</div>
 		</div>
-		<div class="flx --flxRow --flx-start">
-			<div class="flx --flxColumn --gap-10 --flx-start">
+		<div class="flx --flxRow-wrap --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="precioProduccion">Precio de producción</label>
 				<input
 					id="precioProduccion"
@@ -74,7 +74,7 @@
 					required
 				/>
 			</div>
-			<div class="flx --flxColumn --gap-10 --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="precioVenta">Precio de venta</label>
 				<input
 					id="precioVenta"

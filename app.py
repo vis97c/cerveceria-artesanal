@@ -50,9 +50,53 @@ def main():
     # GESTIÓN DE PRODUCTOS
 
     # Vista de gestión de productos
+    # Lista todos los productos en la base de datos
     @app.route("/productos")
     def productos_vista():
-        return render_template("productos/index.html")
+        productos = []
+        moduloProductos = Productos()
+
+        # Definir orden de tabulacion
+        orden = request.args.get("order", "ASC")
+        columna = request.args.get("column", "id")
+
+        def mostrarOrden(nuevaColumna):
+            if nuevaColumna == columna:
+                return "DESC" if orden == "ASC" else "ASC"
+            else:
+                return "ASC"
+
+        try:
+
+            # Obtener todos los productos de la base de datos
+            resultado = moduloProductos.consultarVarios((columna, orden))
+
+            if resultado and len(resultado) > 0:
+                for producto in resultado:
+                    productos.append(
+                        {
+                            # Información del producto
+                            "id": producto[0],
+                            "nombre": producto[1],
+                            "volumen": producto[2],
+                            "vencimiento": producto[3],
+                            "precioProduccion": producto[4],
+                            "precioVenta": producto[5],
+                        }
+                    )
+
+        except Exception as err:
+            print(f"Error al consultar productos: {err}")
+            productos = []
+
+        moduloProductos.cerrar()  # Cerrar la conexión con la base de datos
+
+        return render_template(
+            "productos/index.html",
+            debug=app.debug,
+            productos=productos,
+            mostrarOrden=mostrarOrden,
+        )
 
     # Vista para crear un nuevo producto, con los métodos para visualizar la página ("GET") y para recibir datos ("POST")
     @app.route("/productos/crear", methods=["GET", "POST"])
@@ -170,9 +214,53 @@ def main():
     # GESTIÓN DE CLIENTES
 
     # Vista de gestión de clientes
+    # Lista todos los clientes en la base de datos
     @app.route("/clientes")
     def clientes_vista():
-        return render_template("clientes/index.html")
+        clientes = []
+        moduloClientes = Clientes()
+
+        # Definir orden de tabulacion
+        orden = request.args.get("order", "ASC")
+        columna = request.args.get("column", "id")
+
+        def mostrarOrden(nuevaColumna):
+            if nuevaColumna == columna:
+                return "DESC" if orden == "ASC" else "ASC"
+            else:
+                return "ASC"
+
+        try:
+
+            # Obtener todos los clientes de la base de datos
+            resultado = moduloClientes.consultarVarios((columna, orden))
+
+            if resultado and len(resultado) > 0:
+                for cliente in resultado:
+                    clientes.append(
+                        {
+                            # Información del cliente
+                            "id": cliente[0],
+                            "nombre": cliente[1],
+                            "apellido": cliente[2],
+                            "direccion": cliente[3],
+                            "telefono": cliente[4],
+                            "email": cliente[5],
+                        }
+                    )
+
+        except Exception as err:
+            print(f"Error al consultar clientes: {err}")
+            clientes = []
+
+        moduloClientes.cerrar()  # Cerrar la conexión con la base de datos
+
+        return render_template(
+            "clientes/index.html",
+            debug=app.debug,
+            clientes=clientes,
+            mostrarOrden=mostrarOrden,
+        )
 
     # Vista para crear un nuevo cliente
     @app.route("/clientes/crear", methods=["GET", "POST"])

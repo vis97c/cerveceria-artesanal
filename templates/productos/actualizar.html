@@ -18,8 +18,8 @@
 {% endblock %}
 {% block content %}
 	<form class="flx --flxColumn --gap-20" action="/productos/actualizar" method="POST">
-		<div class="flx --flxRow --flx-start">
-			<div class="flx --flxColumn --gap-10 --flx-start">
+		<div class="flx --flxRow-wrap --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="id">ID del producto</label>
 				<input
 					id="id"
@@ -31,7 +31,7 @@
 					required
 				/>
 			</div>
-			<div class="flx --flxColumn --gap-10 --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="nombre">Nuevo nombre</label>
 				<input
 					id="nombre"

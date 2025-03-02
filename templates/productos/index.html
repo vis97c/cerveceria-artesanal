@@ -11,39 +11,127 @@
 	</ul>
 {% endblock %}
 {% block content %}
-	<div class="flx --flxColumn --flx-start --gap-10">
-		<h4 class="--opacity-05">Menú productos</h4>
-		<ul class="flx --flxRow-wrap --flx-start --gap-10">
-			<li class="">
-				<a
-					class="bttnToggle"
-					href="/productos/crear"
-					data-tooltip="Crear un producto"
-					data-tooltip-text
-				>
-					Crear
-				</a>
-			</li>
-			<li class="">
-				<a
-					class="bttnToggle"
-					href="/productos/actualizar"
-					data-tooltip="Actualizar el nombre de un producto"
-					data-tooltip-text
-				>
-					Actualizar nombre
-				</a>
-			</li>
-			<li class="">
-				<a
-					class="bttnToggle"
-					href="/productos/consultar"
-					data-tooltip="Consultar un producto"
-					data-tooltip-text
-				>
-					Consultar
-				</a>
-			</li>
-		</ul>
+	<div class="flx --flxColumn --flx-start --gap-50 --width-100">
+		<div class="flx --flxColumn --flx-start --gap-10">
+			<h4 class="--opacity-05">Menú productos</h4>
+			<ul class="flx --flxRow-wrap --flx-start --gap-10">
+				<li class="">
+					<a
+						class="bttnToggle"
+						href="/productos/crear"
+						data-tooltip="Crear un producto"
+						data-tooltip-text
+					>
+						Crear
+					</a>
+				</li>
+				<li class="">
+					<a
+						class="bttnToggle"
+						href="/productos/actualizar"
+						data-tooltip="Actualizar el nombre de un producto"
+						data-tooltip-text
+					>
+						Actualizar nombre
+					</a>
+				</li>
+				<li class="">
+					<a
+						class="bttnToggle"
+						href="/productos/consultar"
+						data-tooltip="Consultar un producto"
+						data-tooltip-text
+					>
+						Consultar
+					</a>
+				</li>
+			</ul>
+		</div>
+		{% if productos|length > 0 %}
+			<div class="scroll --horizontal --always --width-100">
+				<table class="tbl --minWidth-100 --txtAlign ">
+					<thead>
+						<tr>
+							<th class="--sticky --pY-10">
+								<a
+									class="link"
+									href="/productos?order={{ mostrarOrden('id') }}&column=id"
+									data-tooltip="Ordenar por Id"
+									data-tooltip-text
+								>
+									Id
+								</a>
+							</th>
+							<td class="--maxWidth-440 --pY-10" width="auto">
+								<a
+									class="link"
+									href="/productos?order={{ mostrarOrden('nombre') }}&column=nombre"
+									data-tooltip="Ordenar por Nombre"
+									data-tooltip-text
+								>
+									Nombre
+								</a>
+							</td>
+							<td class="--maxWidth-440 --pY-10" width="auto">
+								<a
+									class="link"
+									href="/productos?order={{ mostrarOrden('volumen') }}&column=volumen"
+									data-tooltip="Ordenar por Volumen"
+									data-tooltip-text
+								>
+									Volumen
+								</a>
+							</td>
+							<td class="--maxWidth-440 --pY-10" width="auto">
+								<a
+									class="link"
+									href="/productos?order={{ mostrarOrden('vencimiento') }}&column=vencimiento"
+									data-tooltip="Ordenar por Fecha de vencimiento"
+									data-tooltip-text
+								>
+									Fecha de vencimiento
+								</a>
+							</td>
+							<td class="--maxWidth-440 --pY-10" width="auto">
+								<a
+									class="link"
+									href="/productos?order={{ mostrarOrden('precioProduccion') }}&column=precioProduccion"
+									data-tooltip="Ordenar por Precio de producción"
+									data-tooltip-text
+								>
+									Precio de producción
+								</a>
+							</td>
+							<td class="--maxWidth-440 --pY-10" width="auto">
+								<a
+									class="link"
+									href="/productos?order={{ mostrarOrden('precioVenta') }}&column=precioVenta"
+									data-tooltip="Ordenar por Precio de venta"
+									data-tooltip-text
+								>
+									Precio de venta
+								</a>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						{% for producto in productos %}
+							<tr>
+								<th class="--sticky --pY-10">{{ producto.id }}</th>
+								<td class="--maxWidth-440 --pY-10">{{ producto.nombre }}</td>
+								<td class="--maxWidth-440 --pY-10">{{ producto.volumen }} ml</td>
+								<td class="--maxWidth-440 --pY-10">{{ producto.vencimiento }}</td>
+								<td class="--maxWidth-440 --pY-10">
+									${{ producto.precioProduccion }}
+								</td>
+								<td class="--maxWidth-440 --pY-10">
+									<b>${{ producto.precioVenta }}</b>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endif %}
 	</div>
 {% endblock %}

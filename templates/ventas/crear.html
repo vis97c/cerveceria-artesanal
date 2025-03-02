@@ -18,8 +18,8 @@
 {% endblock %}
 {% block content %}
 	<form class="flx --flxColumn --gap-20" action="/ventas/crear" method="POST">
-		<div class="flx --flxRow --flx-start">
-			<div class="flx --flxColumn --gap-10 --flx-start">
+		<div class="flx --flxRow-wrap --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="factura">ID de la Factura</label>
 				<input
 					id="factura"
@@ -31,7 +31,7 @@
 					required
 				/>
 			</div>
-			<div class="flx --flxColumn --gap-10 --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="clienteId">ID del Cliente</label>
 				<input
 					id="clienteId"
@@ -44,8 +44,8 @@
 				/>
 			</div>
 		</div>
-		<div class="flx --flxRow --flx-start">
-			<div class="flx --flxColumn --gap-10 --flx-start">
+		<div class="flx --flxRow-wrap --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="productoId">ID del Producto</label>
 				<input
 					id="productoId"
@@ -57,7 +57,7 @@
 					required
 				/>
 			</div>
-			<div class="flx --flxColumn --gap-10 --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="cantidad">Cantidad</label>
 				<input
 					id="cantidad"
