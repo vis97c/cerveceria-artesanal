@@ -8,11 +8,7 @@ El archivo principal de la aplicación es `app.py`. Este organiza todos los modu
 
 Una maquina con python >= 3.9.10 es necesaria.
 
-## Iniciar aplicación
-
-La aplicación se puede iniciar al ejecutar el archivo app.py, ya sea desde la consola o desde el IDLE. 
-
-## Setup
+## Prerequisitos
 
 Se requiere instalar las librerías necesarias para correr la aplicación (Una única vez).
 
@@ -20,3 +16,16 @@ Se requiere instalar las librerías necesarias para correr la aplicación (Una �
 # Install packages
 pip install -r requirements.txt
 ```
+
+## Iniciar aplicación
+
+La aplicación se puede iniciar al ejecutar el archivo app.py, ya sea desde la consola o desde el IDLE.
+
+## Generar ejecutable
+
+```bash
+# Pyinstaller
+pyinstaller -w -F --add-data \"templates;templates\" --add-data \"static;static\" --add-data \"wkhtmltopdf;wkhtmltopdf\" app.py
+```
+
+Para generar un ejecutable se debe ejecutar el siguiente comando:

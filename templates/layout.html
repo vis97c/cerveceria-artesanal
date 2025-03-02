@@ -4,22 +4,20 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="anonymous" />
-		<link rel="preconnect" href="https://unpkg.com/" crossorigin="anonymous" />
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/@fortawesome/fontawesome-free@^6/css/all.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://unpkg.com/@open-xamu-co/ui-styles@^3.0.0-next.29/dist/index.min.css"
-		/>
+		<link rel="stylesheet" href="/css/poppins/all.min.css" />
+		<link rel="stylesheet" href="/css/fontawesome/all.min.css" />
+		<link rel="stylesheet" href="/css/xamu.min.css" />
 		<link rel="stylesheet" href="/css/main.css" />
 		<title>{% block title %}{% endblock %} - Cervecería artesanal</title>
+		<script type="text/javascript">
+			// Prevenir uso de la consola
+			document.onkeydown = function (e) {
+				if (e.key === "F12") e.preventDefault();
+			};
+			document.addEventListener("contextmenu", function (e) {
+				e.preventDefault();
+			});
+		</script>
 	</head>
 	<body>
 		<!--
@@ -31,8 +29,17 @@
 			<div id="login" class="view --flx --minHeight-100">
 				<section class="view-item --minHeightVh-100 --bgColor">
 					<div class="holder --flx-center --gap-30">
+						<div class="flx --flxRow --flx-end-center  --width-100">
+							<div class="txt --pY --txtSize-sm --txtAlign-right ">
+								<a href="/cerrar" class="link --tm-danger">
+									<i class="icon fa-solid fa-power-off"></i>
+									<span>Cerrar aplicación</span>
+								</a>
+							</div>
+						</div>
 						<div
-							class="flx --flxColumn --flx-center-start --gap-30 --flx --pY --minWidth-50 --maxWidth-100"
+							class="flx --flxColumn --flx-center-start --gap-30 --flx --pY --maxWidth-100"
+							style="min-width: 75%;"
 						>
 							{% block back %}{% endblock %}
 							<div class="flx --flxColumn --gap-5">
@@ -46,7 +53,7 @@
 							</div>
 							{% block content %}{% endblock %}
 						</div>
-						<div class="txt --pY --txtSize-sm">
+						<div class="txt --pY --txtSize-sm --txtAlign-center">
 							<p>
 								Desarrollado por
 								<b>Angie Hurtado,</b>

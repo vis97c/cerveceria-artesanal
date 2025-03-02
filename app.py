@@ -8,10 +8,9 @@ import os
 import sys
 import pdfkit
 from flask import Flask, render_template, request, redirect
+from flaskwebgui import FlaskUI, close_application
 from datetime import datetime
-
-# Pdfkit requiere wkhtmltopdf
-config = pdfkit.configuration(wkhtmltopdf="./wkhtmltopdf/bin/wkhtmltopdf.exe")
+import os
 
 # Para minimizar el código en este archivo separamos la lógica por módulos
 from modules.productos import Productos
@@ -19,11 +18,22 @@ from modules.clientes import Clientes
 from modules.ventas import Ventas
 from modules.correo import enviarCorreo
 
+# Determine the path to wkhtmltopdf
+currentDir = os.path.dirname(os.path.abspath(__file__))
+wkhtmltopdfPath = os.path.join(currentDir, "wkhtmltopdf", "bin", "wkhtmltopdf.exe")
+
+# Pdfkit requiere wkhtmltopdf
+config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdfPath)
+
 # INICIALIZAMOS FLASK
 # Flask es un framework/librería que nos permite generar un servidor web con python
 # Los usuarios interactuaran con la aplicación desde su navegador
 # SQlite3 se abre y cierra por cada request para evitar errores debido al multithreading de flask
 app = Flask(__name__, static_url_path="/")
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+# Instanciamos la clase FlaskUI
+ui = FlaskUI(app, width=1150, height=700)
 
 
 # Función principal de la aplicación donde definimos las rutas y vistas
@@ -463,12 +473,20 @@ def main():
             fecha=datetime.now().astimezone().strftime("%d/%m/%Y %H:%M:%S"),
         )
 
+    @app.route("/cerrar", methods=["GET"])
+    def cerrar_ventana():
+        close_application()
+
+        return "Aplicacion cerrada", 200
+
 
 main()
 
 if __name__ == "__main__":
-    puerto = 5000
-    comando = "start" if sys.platform == "win32" else "open"
-
-    os.system(f"{comando} http://localhost:{puerto}")
-    app.run(port=puerto)
+    # Abrir la aplicacion
+    FlaskUI(
+        app=app,
+        server="flask",
+        width=1150,
+        height=700,
+    ).run()
