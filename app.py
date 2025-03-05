@@ -3,7 +3,6 @@
 # La lógica de los módulos se divide en los archivos de la ruta "/modules" pera luego ser importados acá
 # La aplicación se puede iniciar al ejecutar el archivo app.py, ya sea desde la consola o desde el IDLE.
 
-
 import os
 import sys
 import pdfkit
@@ -18,31 +17,35 @@ from modules.clientes import Clientes
 from modules.ventas import Ventas
 from modules.correo import enviarCorreo
 
-# Determine the path to wkhtmltopdf
+# Pdfkit usado para generar pdfs requiere wkhtmltopdf
 currentDir = os.path.dirname(os.path.abspath(__file__))
 wkhtmltopdfPath = os.path.join(currentDir, "wkhtmltopdf", "bin", "wkhtmltopdf.exe")
-
-# Pdfkit requiere wkhtmltopdf
 config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdfPath)
 
 # INICIALIZAMOS FLASK
 # Flask es un framework/librería que nos permite generar un servidor web con python
-# Los usuarios interactuaran con la aplicación desde su navegador
+# Al adicionar pyinstaller y flaskwebgui se genera un ejecutable que puede ser usado por usuarios sin cononocimientos de python
+# Los usuarios interactuaran con la aplicación desde la ventana de la aplicacion
 # SQlite3 se abre y cierra por cada request para evitar errores debido al multithreading de flask
 app = Flask(__name__, static_url_path="/")
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Instanciamos la clase FlaskUI
+# FlaskUI permite generar una ventana de la aplicacion en un navegador embebido (integrado)
 ui = FlaskUI(app, width=1150, height=700)
 
 
 # Función principal de la aplicación donde definimos las rutas y vistas
+# Las vistas se encuentran en templates y son archivos html que se renderizan cuando se accede a una ruta
+# Flask permite usar un pseudo lenguaje de templates llamado Jinja2 y que permite inyectar datos de python
+# Estos datos se pasan a la funcion render_template junto a las variables que vayamos a usar
 def main():
     # RUTAS PRINCIPALES
-    # Separamos los módulos de nuestra aplicación en rutas que pueden ser accedidas desde el navegador
+    # Separamos los módulos de nuestra aplicación en rutas que pueden ser accedidas desde la aplicacion
     # Ej: http://localhost:5000
 
-    # Ruta del menú de la página de inicio. La función abajo del @app.route("/") usará la dirección que está dentro de los paréntesis y el render_template buscará y devolverá el archivo html
+    # Ruta del menú de la página de inicio.
+    # La función abajo del @app.route("/") usará la dirección que está dentro de los paréntesis y el render_template buscará y devolverá el archivo html
     @app.route("/")
     def index():
         return render_template("index.html")
@@ -50,7 +53,7 @@ def main():
     # GESTIÓN DE PRODUCTOS
 
     # Vista de gestión de productos
-    # Lista todos los productos en la base de datos
+    # Permite listar todos los productos en la base de datos
     @app.route("/productos")
     def productos_vista():
         productos = []
@@ -60,6 +63,7 @@ def main():
         orden = request.args.get("order", "ASC")
         columna = request.args.get("column", "id")
 
+        # Funcion para mostrar el orden segun la columna
         def mostrarOrden(nuevaColumna):
             if nuevaColumna == columna:
                 return "DESC" if orden == "ASC" else "ASC"
@@ -214,7 +218,7 @@ def main():
     # GESTIÓN DE CLIENTES
 
     # Vista de gestión de clientes
-    # Lista todos los clientes en la base de datos
+    # Permite listar todos los clientes en la base de datos
     @app.route("/clientes")
     def clientes_vista():
         clientes = []
@@ -224,6 +228,7 @@ def main():
         orden = request.args.get("order", "ASC")
         columna = request.args.get("column", "id")
 
+        # Funcion para mostrar el orden segun la columna
         def mostrarOrden(nuevaColumna):
             if nuevaColumna == columna:
                 return "DESC" if orden == "ASC" else "ASC"
@@ -453,6 +458,7 @@ def main():
 
                 moduloVentas.cerrar()  # Cerrar la conexión
 
+                # Redireccionamos a la vista de factura
                 if resultado and len(resultado) > 0:
                     return redirect(f"/facturacion/{facturaId}")
                 else:
@@ -561,6 +567,7 @@ def main():
             fecha=datetime.now().astimezone().strftime("%d/%m/%Y %H:%M:%S"),
         )
 
+    # Vista para poder cerrar la aplicacion manualmente
     @app.route("/cerrar", methods=["GET"])
     def cerrar_ventana():
         close_application()
@@ -571,7 +578,7 @@ def main():
 main()
 
 if __name__ == "__main__":
-    # Abrir la aplicacion
+    # Abrir la aplicacion (Ventana de la aplicacion)
     FlaskUI(
         app=app,
         server="flask",
