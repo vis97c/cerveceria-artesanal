@@ -24,7 +24,7 @@
 				id="id"
 				class="iTxt"
 				type="number"
-				oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+				oninput="this.value = this.value.replace(/[^0-9]/g,'').substring(0, 12)"
 				name="id"
 				placeholder="Ej: 123456789"
 				required

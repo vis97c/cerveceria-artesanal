@@ -17,6 +17,11 @@
 	</ul>
 {% endblock %}
 {% block content %}
+	{% if error %}
+		<p class="--txtColor-danger">{{ error }}</p>
+	{% elif success %}
+		<p class="--txtColor-success">{{ success }}</p>
+	{% endif %}
 	<form class="flx --flxColumn --gap-20" action="/ventas/crear" method="POST">
 		<div class="flx --flxRow-wrap --flx-start">
 			<div class="flx --flxColumn --flx-start --gap-10 --flx">
@@ -25,7 +30,7 @@
 					id="factura"
 					class="iTxt"
 					type="number"
-					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'').substring(0, 12)"
 					name="factura"
 					placeholder="Ej: 123"
 					required
@@ -37,7 +42,7 @@
 					id="clienteId"
 					class="iTxt"
 					type="number"
-					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'').substring(0, 12)"
 					name="clienteId"
 					placeholder="Ej: 123456789"
 					required
@@ -51,7 +56,7 @@
 					id="productoId"
 					class="iTxt"
 					type="number"
-					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'').substring(0, 12)"
 					name="productoId"
 					placeholder="Ej: 1"
 					required
@@ -63,7 +68,7 @@
 					id="cantidad"
 					class="iTxt"
 					type="number"
-					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'').substring(0, 12)"
 					name="cantidad"
 					placeholder="Ej: 5"
 					required
@@ -74,9 +79,4 @@
 			<button type="submit" class="bttn">Crear Venta</button>
 		</div>
 	</form>
-	{% if error %}
-		<p class="--txtColor-danger">{{ error }}</p>
-	{% elif success %}
-		<p class="--txtColor-success">{{ success }}</p>
-	{% endif %}
 {% endblock %}

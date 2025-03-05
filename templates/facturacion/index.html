@@ -11,6 +11,9 @@
 	</ul>
 {% endblock %}
 {% block content %}
+	{% if factura == False %}
+		<p class="--txtColor-danger">La factura de venta no existe</p>
+	{% endif %}
 	<form class="flx --flxColumn --gap-20" action="/facturacion" method="POST">
 		<div class="flx --flxColumn --gap-10 --flx-start">
 			<label for="id">ID de la factura</label>
@@ -18,7 +21,7 @@
 				id="id"
 				class="iTxt"
 				type="number"
-				oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+				oninput="this.value = this.value.replace(/[^0-9]/g,'').substring(0, 12)"
 				name="id"
 				placeholder="Ej: 123"
 				required
@@ -28,7 +31,4 @@
 			<button type="submit" class="bttn">Ver factura</button>
 		</div>
 	</form>
-	{% if factura == False %}
-		<p class="--txtColor-danger">La factura de venta no existe</p>
-	{% endif %}
 {% endblock %}
