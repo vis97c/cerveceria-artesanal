@@ -9,7 +9,6 @@ import pdfkit
 from flask import Flask, render_template, request, redirect
 from flaskwebgui import FlaskUI, close_application
 from datetime import datetime
-import os
 
 # Para minimizar el código en este archivo separamos la lógica por módulos
 from modules.productos import Productos
@@ -17,8 +16,11 @@ from modules.clientes import Clientes
 from modules.ventas import Ventas
 from modules.correo import enviarCorreo
 
-# Pdfkit usado para generar pdfs requiere wkhtmltopdf
 currentDir = os.path.dirname(os.path.abspath(__file__))
+templateFolder = os.path.join(currentDir, "templates")
+staticFolder = os.path.join(currentDir, "static")
+
+# Pdfkit usado para generar pdfs requiere wkhtmltopdf
 wkhtmltopdfPath = os.path.join(currentDir, "wkhtmltopdf", "bin", "wkhtmltopdf.exe")
 config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdfPath)
 
@@ -27,12 +29,13 @@ config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdfPath)
 # Al adicionar pyinstaller y flaskwebgui se genera un ejecutable que puede ser usado por usuarios sin cononocimientos de python
 # Los usuarios interactuaran con la aplicación desde la ventana de la aplicacion
 # SQlite3 se abre y cierra por cada request para evitar errores debido al multithreading de flask
-app = Flask(__name__, static_url_path="/")
+app = Flask(
+    __name__,
+    static_url_path="/",
+    template_folder=templateFolder,
+    static_folder=staticFolder,
+)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-
-# Instanciamos la clase FlaskUI
-# FlaskUI permite generar una ventana de la aplicacion en un navegador embebido (integrado)
-ui = FlaskUI(app, width=1150, height=700)
 
 
 # Función principal de la aplicación donde definimos las rutas y vistas
@@ -567,7 +570,7 @@ def main():
             fecha=datetime.now().astimezone().strftime("%d/%m/%Y %H:%M:%S"),
         )
 
-    # Vista para poder cerrar la aplicacion manualmente
+    # Vista para poder cerrar la aplicación manualmente
     @app.route("/cerrar", methods=["GET"])
     def cerrar_ventana():
         close_application()
@@ -575,16 +578,29 @@ def main():
         return "Aplicacion cerrada", 200
 
 
+def cleanup():
+    """Forzar la eliminación de la carpeta temporal antes de salir"""
+    if hasattr(sys, "_MEIPASS"):
+        temp_dir = sys._MEIPASS
+        try:
+            shutil.rmtree(temp_dir, ignore_errors=True)
+            print(f"Carpeta temporal eliminada: {temp_dir}")
+        except Exception as e:
+            print(f"⚠️ No se pudo eliminar {temp_dir}: {e}")
+
+
 main()
 
 if __name__ == "__main__":
-    # Solicitar un puerto libre al sistema
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind(("", 0))
     port = sock.getsockname()[1]
+
     sock.close()
 
-    # Abrir la aplicacion (Ventana de la aplicacion)
+    # Instanciamos la clase FlaskUI
+    # FlaskUI permite generar una ventana de la aplicacion en un navegador embebido (integrado)
+    # Abrir la aplicación (Ventana de la aplicación)
     FlaskUI(
         app=app,
         port=port,

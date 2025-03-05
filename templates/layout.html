@@ -8,6 +8,23 @@
 		<link rel="stylesheet" href="/css/fontawesome/all.min.css" />
 		<link rel="stylesheet" href="/css/xamu.min.css" />
 		<link rel="stylesheet" href="/css/main.css" />
+		<style>
+			.disclaimer {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				gap: 1rem;
+				z-index: 10;
+				background: #fff;
+			}
+		</style>
 		<title>{% block title %}{% endblock %} - Cervecería artesanal</title>
 		{% if not debug %}
 			<script type="text/javascript">
@@ -28,9 +45,19 @@
          https://flask.palletsprojects.com/en/stable/tutorial/layout/
       -->
 		<main id="appex" class="--txtColor-dark7">
-			<div id="login" class="view --flx --minHeight-100">
+			<div id="root" class="view --flx --minHeight-100">
 				<section class="view-item --minHeightVh-100 --bgColor">
 					<div class="holder --flx-center --gap-30 --maxWidth-1080">
+						<div class="disclaimer --hidden-full">
+							<h1 class="">¡Lo sentimos!</h1>
+							<h3>Tu aplicación funciona, pero no pudimos iniciarla esta vez.</h3>
+							<p>
+								Parece que algunos archivos no se descomprimieron adecuadamente, o
+								tu sistema bloqueo los puertos. Reinicia la aplicación para que se
+								ejecute normalmente.
+							</p>
+							<p><small>Prometemos que no volverá a suceder.</small></p>
+						</div>
 						<div class="flx --flxRow --flx-end-center  --width-100">
 							<div class="txt --pY --txtSize-sm --txtAlign-right ">
 								<a href="/cerrar" class="link --tm-danger">

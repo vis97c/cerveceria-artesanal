@@ -99,7 +99,12 @@
 								</tbody>
 							</table>
 						</div>
-						<h4 class="mb-0">Total: ${{ factura.total }}</h4>
+						<div class="vstack gap-1">
+							<p class="mb-0">
+								<small><i>"Uno en esta vida viene es a pasarla bueno"</i></small>
+							</p>
+							<h4 class="mb-0">Total: ${{ factura.total }}</h4>
+						</div>
 						{% if not pdf %}
 							<form
 								class="hstack gap-3 no-print"
