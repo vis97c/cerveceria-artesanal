@@ -4,7 +4,7 @@
 # La aplicación se puede iniciar al ejecutar el archivo app.py, ya sea desde la consola o desde el IDLE.
 
 import os
-import sys
+import socket
 import pdfkit
 from flask import Flask, render_template, request, redirect
 from flaskwebgui import FlaskUI, close_application
@@ -578,9 +578,16 @@ def main():
 main()
 
 if __name__ == "__main__":
+    # Solicitar un puerto libre al sistema
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(("", 0))
+    port = sock.getsockname()[1]
+    sock.close()
+
     # Abrir la aplicacion (Ventana de la aplicacion)
     FlaskUI(
         app=app,
+        port=port,
         server="flask",
         width=1150,
         height=700,
