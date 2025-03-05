@@ -4,7 +4,9 @@
   "description": "Cervecería artesanal",
   "main": "app.py",
   "scripts": {
-    "dev": "flask --app app run --debug",
+    "serve": "flask --app app run --debug",
+    "dev": "python app.py",
+    "distribute": "pyinstaller -w -F --add-data \"templates;templates\" --add-data \"static;static\" --add-data \"wkhtmltopdf;wkhtmltopdf\" app.py",
     "pip:install": "pip install -r requirements.txt",
     "pip:freeze": "pip freeze > requirements.txt"
   },

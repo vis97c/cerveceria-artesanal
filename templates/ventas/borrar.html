@@ -17,27 +17,32 @@
 	</ul>
 {% endblock %}
 {% block content %}
+	{% if error %}
+		<p class="--txtColor-danger">{{ error }}</p>
+	{% elif success %}
+		<p class="--txtColor-success">{{ success }}</p>
+	{% endif %}
 	<form class="flx --flxColumn --gap-20" action="/ventas/borrar" method="POST">
-		<div class="flx --flxRow --flx-start">
-			<div class="flx --flxColumn --gap-10 --flx-start">
+		<div class="flx --flxRow-wrap --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="factura">ID de la Factura</label>
 				<input
 					id="factura"
 					class="iTxt"
 					type="number"
-					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'').substring(0, 12)"
 					name="factura"
 					placeholder="Ej: 123"
 					required
 				/>
 			</div>
-			<div class="flx --flxColumn --gap-10 --flx-start">
+			<div class="flx --flxColumn --flx-start --gap-10 --flx">
 				<label for="producto">ID del Producto</label>
 				<input
 					id="producto"
 					class="iTxt"
 					type="number"
-					oninput="this.value = this.value.replace(/[^0-9]/g,'')"
+					oninput="this.value = this.value.replace(/[^0-9]/g,'').substring(0, 12)"
 					name="producto"
 					placeholder="Ej: 1"
 					required
@@ -48,9 +53,4 @@
 			<button type="submit" class="bttn --tm-danger-light">Borrar Venta</button>
 		</div>
 	</form>
-	{% if error %}
-		<p class="--txtColor-danger">{{ error }}</p>
-	{% elif success %}
-		<p class="--txtColor-success">{{ success }}</p>
-	{% endif %}
 {% endblock %}

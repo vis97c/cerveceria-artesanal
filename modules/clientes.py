@@ -41,3 +41,14 @@ class Clientes(Conectar):
         )
 
         return cursorObj.fetchall()[0]
+
+    # Método que consulta todos los clientes.
+    def consultarVarios(self, ordenarPor=None):
+        query = "SELECT * FROM clientes"
+
+        if ordenarPor:
+            query += f" ORDER BY {ordenarPor[0]} {ordenarPor[1]}"
+
+        cursorObj = self._correr(query, persistencia=False)
+
+        return cursorObj.fetchall()

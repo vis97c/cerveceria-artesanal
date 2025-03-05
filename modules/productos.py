@@ -33,11 +33,22 @@ class Productos(Conectar):
             "UPDATE productos SET nombre = ? WHERE id = ?", (nuevoNombre, identificador)
         )
 
-    # Método que consulta la información vigente de un producto. Solicita al usuario diligenciar el ID del prodcuto,
-    # luego muestra toda la infomación de este, con la creación del objeto cursor que recorre la base de datos.
+    # Método que consulta la información vigente de un producto. Solicita al usuario diligenciar el ID del producto,
+    # luego muestra toda la información de este, con la creación del objeto cursor que recorre la base de datos.
     def consultarUno(self, identificador):
         cursorObj = self._correr(
             "SELECT * FROM productos WHERE id = ?", (identificador,), False
         )
 
         return cursorObj.fetchall()[0]
+
+    # Método que consulta todos los productos.
+    def consultarVarios(self, ordenarPor=None):
+        query = "SELECT * FROM productos"
+
+        if ordenarPor:
+            query += f" ORDER BY {ordenarPor[0]} {ordenarPor[1]}"
+
+        cursorObj = self._correr(query, persistencia=False)
+
+        return cursorObj.fetchall()

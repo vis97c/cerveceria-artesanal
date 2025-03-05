@@ -3,15 +3,13 @@
 # La lógica de los módulos se divide en los archivos de la ruta "/modules" pera luego ser importados acá
 # La aplicación se puede iniciar al ejecutar el archivo app.py, ya sea desde la consola o desde el IDLE.
 
-
 import os
 import sys
 import pdfkit
 from flask import Flask, render_template, request, redirect
+from flaskwebgui import FlaskUI, close_application
 from datetime import datetime
-
-# Pdfkit requiere wkhtmltopdf
-config = pdfkit.configuration(wkhtmltopdf="./wkhtmltopdf/bin/wkhtmltopdf.exe")
+import os
 
 # Para minimizar el código en este archivo separamos la lógica por módulos
 from modules.productos import Productos
@@ -19,20 +17,35 @@ from modules.clientes import Clientes
 from modules.ventas import Ventas
 from modules.correo import enviarCorreo
 
+# Pdfkit usado para generar pdfs requiere wkhtmltopdf
+currentDir = os.path.dirname(os.path.abspath(__file__))
+wkhtmltopdfPath = os.path.join(currentDir, "wkhtmltopdf", "bin", "wkhtmltopdf.exe")
+config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdfPath)
+
 # INICIALIZAMOS FLASK
 # Flask es un framework/librería que nos permite generar un servidor web con python
-# Los usuarios interactuaran con la aplicación desde su navegador
+# Al adicionar pyinstaller y flaskwebgui se genera un ejecutable que puede ser usado por usuarios sin cononocimientos de python
+# Los usuarios interactuaran con la aplicación desde la ventana de la aplicacion
 # SQlite3 se abre y cierra por cada request para evitar errores debido al multithreading de flask
 app = Flask(__name__, static_url_path="/")
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+# Instanciamos la clase FlaskUI
+# FlaskUI permite generar una ventana de la aplicacion en un navegador embebido (integrado)
+ui = FlaskUI(app, width=1150, height=700)
 
 
 # Función principal de la aplicación donde definimos las rutas y vistas
+# Las vistas se encuentran en templates y son archivos html que se renderizan cuando se accede a una ruta
+# Flask permite usar un pseudo lenguaje de templates llamado Jinja2 y que permite inyectar datos de python
+# Estos datos se pasan a la funcion render_template junto a las variables que vayamos a usar
 def main():
     # RUTAS PRINCIPALES
-    # Separamos los módulos de nuestra aplicación en rutas que pueden ser accedidas desde el navegador
+    # Separamos los módulos de nuestra aplicación en rutas que pueden ser accedidas desde la aplicacion
     # Ej: http://localhost:5000
 
-    # Ruta del menú de la página de inicio. La función abajo del @app.route("/") usará la dirección que está dentro de los paréntesis y el render_template buscará y devolverá el archivo html
+    # Ruta del menú de la página de inicio.
+    # La función abajo del @app.route("/") usará la dirección que está dentro de los paréntesis y el render_template buscará y devolverá el archivo html
     @app.route("/")
     def index():
         return render_template("index.html")
@@ -40,9 +53,54 @@ def main():
     # GESTIÓN DE PRODUCTOS
 
     # Vista de gestión de productos
+    # Permite listar todos los productos en la base de datos
     @app.route("/productos")
     def productos_vista():
-        return render_template("productos/index.html")
+        productos = []
+        moduloProductos = Productos()
+
+        # Definir orden de tabulacion
+        orden = request.args.get("order", "ASC")
+        columna = request.args.get("column", "id")
+
+        # Funcion para mostrar el orden segun la columna
+        def mostrarOrden(nuevaColumna):
+            if nuevaColumna == columna:
+                return "DESC" if orden == "ASC" else "ASC"
+            else:
+                return "ASC"
+
+        try:
+
+            # Obtener todos los productos de la base de datos
+            resultado = moduloProductos.consultarVarios((columna, orden))
+
+            if resultado and len(resultado) > 0:
+                for producto in resultado:
+                    productos.append(
+                        {
+                            # Información del producto
+                            "id": producto[0],
+                            "nombre": producto[1],
+                            "volumen": producto[2],
+                            "vencimiento": producto[3],
+                            "precioProduccion": producto[4],
+                            "precioVenta": producto[5],
+                        }
+                    )
+
+        except Exception as err:
+            print(f"Error al consultar productos: {err}")
+            productos = []
+
+        moduloProductos.cerrar()  # Cerrar la conexión con la base de datos
+
+        return render_template(
+            "productos/index.html",
+            debug=app.debug,
+            productos=productos,
+            mostrarOrden=mostrarOrden,
+        )
 
     # Vista para crear un nuevo producto, con los métodos para visualizar la página ("GET") y para recibir datos ("POST")
     @app.route("/productos/crear", methods=["GET", "POST"])
@@ -160,9 +218,54 @@ def main():
     # GESTIÓN DE CLIENTES
 
     # Vista de gestión de clientes
+    # Permite listar todos los clientes en la base de datos
     @app.route("/clientes")
     def clientes_vista():
-        return render_template("clientes/index.html")
+        clientes = []
+        moduloClientes = Clientes()
+
+        # Definir orden de tabulacion
+        orden = request.args.get("order", "ASC")
+        columna = request.args.get("column", "id")
+
+        # Funcion para mostrar el orden segun la columna
+        def mostrarOrden(nuevaColumna):
+            if nuevaColumna == columna:
+                return "DESC" if orden == "ASC" else "ASC"
+            else:
+                return "ASC"
+
+        try:
+
+            # Obtener todos los clientes de la base de datos
+            resultado = moduloClientes.consultarVarios((columna, orden))
+
+            if resultado and len(resultado) > 0:
+                for cliente in resultado:
+                    clientes.append(
+                        {
+                            # Información del cliente
+                            "id": cliente[0],
+                            "nombre": cliente[1],
+                            "apellido": cliente[2],
+                            "direccion": cliente[3],
+                            "telefono": cliente[4],
+                            "email": cliente[5],
+                        }
+                    )
+
+        except Exception as err:
+            print(f"Error al consultar clientes: {err}")
+            clientes = []
+
+        moduloClientes.cerrar()  # Cerrar la conexión con la base de datos
+
+        return render_template(
+            "clientes/index.html",
+            debug=app.debug,
+            clientes=clientes,
+            mostrarOrden=mostrarOrden,
+        )
 
     # Vista para crear un nuevo cliente
     @app.route("/clientes/crear", methods=["GET", "POST"])
@@ -355,6 +458,7 @@ def main():
 
                 moduloVentas.cerrar()  # Cerrar la conexión
 
+                # Redireccionamos a la vista de factura
                 if resultado and len(resultado) > 0:
                     return redirect(f"/facturacion/{facturaId}")
                 else:
@@ -463,12 +567,21 @@ def main():
             fecha=datetime.now().astimezone().strftime("%d/%m/%Y %H:%M:%S"),
         )
 
+    # Vista para poder cerrar la aplicacion manualmente
+    @app.route("/cerrar", methods=["GET"])
+    def cerrar_ventana():
+        close_application()
+
+        return "Aplicacion cerrada", 200
+
 
 main()
 
 if __name__ == "__main__":
-    puerto = 5000
-    comando = "start" if sys.platform == "win32" else "open"
-
-    os.system(f"{comando} http://localhost:{puerto}")
-    app.run(port=puerto)
+    # Abrir la aplicacion (Ventana de la aplicacion)
+    FlaskUI(
+        app=app,
+        server="flask",
+        width=1150,
+        height=700,
+    ).run()

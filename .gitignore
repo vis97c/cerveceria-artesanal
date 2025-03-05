@@ -1,7 +1,15 @@
 .env
 logs
-__pycache__
 node_modules/
+
+# python
+__pycache__
 *.db
 .venv
 *.db-journal
+
+# pyinstaller paths
+
+*.spec
+dist/
+build/
